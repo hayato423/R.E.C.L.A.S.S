@@ -3,9 +3,9 @@ import config
 import lecture
 
 #時間割リスト [時間][曜日]
-time_table = [[None]*4 for i in range(5)]
+time_table = [[None]*5 for i in range(6)]
 #lectureインスタンスを格納するリスト
-lecture_instances = [[None]*4 for i in range(5)]
+lecture_instances = [[None]*5 for i in range(6)]
 
 #各授業の辞書型データ
 lectures_data = [
@@ -27,28 +27,37 @@ lectures_data = [
 for l in lectures_data:
   time_table[l['day']-1][l['time']-1] = l
 
+width = 15
+
 #画面レイアウト
 main_layout = [
   [sg.Text('Main Window'),sg.Button('設定',key='config_btn')],
-  [sg.Text('月　火　水　木　金')],
+  [sg.Text('',size=(2,1)),
+  sg.Text('月',size=(width,1),justification='center'),
+  sg.Text('火',size=(width,1),justification='center'),
+  sg.Text('水',size=(width,1),justification='center'),
+  sg.Text('木',size=(width,1),justification='center'),
+  sg.Text('金',size=(width,1),justification='center'),
+  sg.Text('土',size=(width,1),justification='center'),],
   [sg.Text('1')],
   [sg.Text('2')],
   [sg.Text('3')],
-  [sg.Text('4')]
+  [sg.Text('4')],
+  [sg.Text('5')]
 ]
 
 
 
 
 #時間割に基づいてレイアウトを追加
-for time in range(4):
+for time in range(5):
   line = []
-  for day in range(5):
+  for day in range(6):
     if time_table[day][time] is None:
-      main_layout[time+2].append(sg.Button('',key=str(day)+str(time),size=(13,3)))
+      main_layout[time+2].append(sg.Button('',key=str(day)+str(time),size=(width,3)))
     else:
       lec = time_table[day][time]
-      main_layout[time+2].append(sg.Button(lec['lecture_name'],key=str(day)+str(time),size=(13,3)))
+      main_layout[time+2].append(sg.Button(lec['lecture_name'],key=str(day)+str(time),size=(width,3)))
       instance = lecture.Lecture(lec['lecture_name'],lec['teacher_name'])
       lecture_instances[day][time] = instance
 
@@ -80,6 +89,9 @@ while True:
   elif main_event == '03':
     if lecture_instances[0][3] is not None:
       lecture_instances[0][3].open()
+  elif main_event == '04':
+    if lecture_instances[0][4] is not None:
+      lecture_instances[0][4].open()
 
   elif main_event == '10':
     if lecture_instances[1][0] is not None:
@@ -93,6 +105,9 @@ while True:
   elif main_event == '13':
     if lecture_instances[1][3] is not None:
       lecture_instances[1][3].open()
+  elif main_event == '14':
+    if lecture_instances[1][4] is not None:
+      lecture_instances[1][4].open()
 
   elif main_event == '20':
     if lecture_instances[2][0] is not None:
@@ -106,6 +121,9 @@ while True:
   elif main_event == '23':
     if lecture_instances[2][3] is not None:
       lecture_instances[2][3].open()
+  elif main_event == '24':
+    if lecture_instances[2][4] is not None:
+      lecture_instances[2][4].open()
 
   elif main_event == '30':
     if lecture_instances[3][0] is not None:
@@ -119,6 +137,9 @@ while True:
   elif main_event == '33':
     if lecture_instances[3][3] is not None:
       lecture_instances[3][3].open()
+  elif main_event == '34':
+    if lecture_instances[3][4] is not None:
+      lecture_instances[3][4].open()
 
   elif main_event == '40':
     if lecture_instances[4][0] is not None:
@@ -132,6 +153,25 @@ while True:
   elif main_event == '43':
     if lecture_instances[4][3] is not None:
       lecture_instances[4][3].open()
+  elif main_event == '44':
+    if lecture_instances[4][4] is not None:
+      lecture_instances[4][4].open()
+
+  elif main_event == '50':
+    if lecture_instances[5][0] is not None:
+      lecture_instances[5][0].open()
+  elif main_event == '51':
+    if lecture_instances[5][1] is not None:
+      lecture_instances[5][1].open()
+  elif main_event == '52':
+    if lecture_instances[5][2] is not None:
+      lecture_instances[5][2].open()
+  elif main_event == '53':
+    if lecture_instances[5][3] is not None:
+      lecture_instances[5][3].open()
+  elif main_event == '54':
+    if lecture_instances[5][4] is not None:
+      lecture_instances[5][4].open()
 
 main_window.close()
 
