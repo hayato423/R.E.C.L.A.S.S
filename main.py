@@ -10,7 +10,7 @@ home_window = home.Home()
 def func():
   while True:
     dt_now = datetime.datetime.now()
-    print(dt_now)
+    print(dt_now.strftime('%Y年%m月%d日 %H:%M:%S'))
     time.sleep(1)
 
 
