@@ -14,7 +14,7 @@ def login_confirm(ID,PASSWORD):
   msg = ''
   can_login = False
   options = Options()
-  options.add_argument('--headless')
+  #options.add_argument('--headless')
   driver = webdriver.Chrome(chrome_options=options)
   wait = WebDriverWait(driver,20)
   scomb_url = 'https://scomb.shibaura-it.ac.jp/portal/index'
@@ -44,7 +44,6 @@ def login_confirm(ID,PASSWORD):
     return can_login, msg
   except Exception as e:
     msg = '例外が発生しました'
+    print(e)
     can_login = False
     return can_login, msg
-  finally:
-    driver.close()
