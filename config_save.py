@@ -1,17 +1,16 @@
-import sqlite3
-class config_save:
-    conn=sqlite3.connect('config.db')
-    c=conn.cursor()
 
+import configparser 
 
-    c.execute('''CREATE TABLE scomb(ID,password)''')
+#iniファイルへの書き込む情報
+def save(alert_task,conect_zoom,update):
+ config = configparser.ConfigParser()
+ section1 = 'Config'
+ config.add_section(section1)
+ config.set(section1, 'alert_task', alert_task)    #なぜかiniファイルには'Id'の'I'が小文字で入力されている
+ config.set(section1, 'conect_zoom', conect_zoom)
+ config.set(section1, 'update',update)
 
-    scombID=str(input("IDを入力して下さい"))
-    scomb_pass=str(input("passwordを入力して下さい"))
-
-    c.execute("INSERT INTO scomb VALUES(scombID,scomb_pass)")
-
-    conn.commit()
-    conn.close()
-
+#iniファイルへの書き込み
+ with open('config.ini','w') as file:
+     config.write(file)
 
