@@ -22,6 +22,8 @@ PASSWORD = config_ini['Scomb']['Password']
 
 
 def get_timetable(id,password):
+  status = 0
+  msg = ''
   lectures = []
 
   options = Options()
@@ -67,20 +69,38 @@ def get_timetable(id,password):
           teacher_name = lecture_detail.replace('【教室】','')
           teacher_name = teacher_name.replace('\u3000',' ')
           teacher_name = teacher_name.replace('\n','')
-          lecture_data = {'lecture_name':lecture_name,'teacher_name':teacher_name,'day':day_num,'time':time-1}
+          lecture_data = [lecture_name,teacher_name,day_num,time-1]
           day_num += 1
           if day_num == 7:
             day_num = 0
           if lecture_name != ' ' and teacher_name != ' ':
             lectures.append(lecture_data)
 
-      print(lectures)
+      #print(lectures)
+      update_table(lectures)
+      msg = '更新が完了しました'
 
-
+    else:
+      msg = 'ログインに失敗しました'
+      status = -1
+      return status,msg
   except TimeoutException as te:
       print(te)
   except Exception as e:
       print(e)
+
+
+
+def update_table(lectures_list):
+  conn = sqlite3.connect('reclass.db')
+  cur = conn.cursor()
+  delete_all = 'delete from lectures'
+  cur.execute(delete_all)
+  for lec in lectures_list:
+      query = 'insert into  lectures (lecture_name,teacher_name,day,time) values(?,?,?,?)'
+      cur.execute(query,tuple(lec))
+  conn.commit()
+
 
 get_timetable(ID,PASSWORD)
 
