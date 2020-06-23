@@ -2,11 +2,11 @@
 import configparser 
 
 #iniファイルへの書き込む情報
-def save(alert_task,conect_zoom,update):
+def timesave(alert_task,conect_zoom,update):
  config = configparser.ConfigParser()
  section1 = 'Config'
  config.add_section(section1)
- config.set(section1, 'alert_task', alert_task)    #なぜかiniファイルには'Id'の'I'が小文字で入力されている
+ config.set(section1, 'alert_task', alert_task)    
  config.set(section1, 'conect_zoom', conect_zoom)
  config.set(section1, 'update',update)
 
