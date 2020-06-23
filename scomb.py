@@ -1,5 +1,7 @@
 import PySimpleGUI as sg
 from scomb_info_save import save
+from login_check import login
+import getpass
 
 class Scomb:
 
@@ -15,20 +17,33 @@ class Scomb:
    ]
    window = sg.Window('Scomb登録',layout=layout,size=(300,200))
    
-   #入力されたIDとPasswordを正誤判定
+   #画面表示と入力されたIDとPasswordを正誤判定
+   #ID Password間違い時になぜか例外処理で通ってしまう
    while True:
       event , values = window.read()
+
       if event == 'OK':
-        if len(values['scomb_ID']) >= 11:
+        if len(values['scomb_ID']) > 11:
           show_message = "IDは11文字以下にしてください。"
           sg.popup(show_message)
-        elif len(values['scomb_pass']) >= 30:
+        elif len(values['scomb_pass']) > 30:
           show_message = "パスワードは30文字以下にしてください。"
           sg.popup(show_message)
         else :
-          save(values['scomb_ID'],values['scomb_pass'])
-          show_message = "登録完了しました。"
-          sg.popup(show_message)
+          judge_login = login(values['scomb_ID'],values['scomb_pass'])
+          if judge_login == 1:
+           save(values['scomb_ID'],values['scomb_pass'])
+           show_message = "登録完了しました。"
+           sg.popup(show_message)
+          elif judge_login == 2:
+           show_message = "IDもしくはパスワードが間違っています"
+           sg.popup(show_message) 
+          elif judge_login == 3:
+           show_message = "タイムアウトによりログインを失敗しました"
+           sg.popup(show_message)
+          elif judge_login == 4:
+           show_message = "例外が発生し、ログインできませんでした"
+           sg.popup(show_message) 
       if event == 'キャンセル':
         window.close()
       if event is None:
