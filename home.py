@@ -1,3 +1,9 @@
+'''
+disingner : 寺尾颯人
+date      : 2020.06.23
+purpose   : ホーム画面クラス
+'''
+
 import PySimpleGUI as sg
 import config
 import lecture
@@ -15,22 +21,7 @@ class Home:
     #lectureインスタンスを格納するリスト
     self.lecture_instances = [[None]*5 for i in range(6)]
 
-    #各授業の辞書型データ
-    ''''self.lectures_data = [
-      {'lecture_name':'社会心理学','teacher_name':'岡田佳子','day':1,'time':2},
-      {'lecture_name':'ソフトウェア工学','teacher_name':'中島　毅','day':2,'time':2},
-      {'lecture_name':'高度情報演習1B','teacher_name':'中島　毅','day':2,'time':3},
-      {'lecture_name':'高度情報演習1B','teacher_name':'中島　毅','day':2,'time':4},
-      {'lecture_name':'データベース','teacher_name':'	木村　昌臣','day':3,'time':1},
-      {'lecture_name':'高度情報演習１A','teacher_name':'杉本','day':3,'time':3},
-      {'lecture_name':'高度情報演習１A','teacher_name':'杉本','day':3,'time':4},
-      {'lecture_name':'上級プログラミング','teacher_name':'杉本','day':4,'time':1},
-      {'lecture_name':'上級プログラミング','teacher_name':'杉本','day':4,'time':2},
-      {'lecture_name':'デジタルメディア処理２','teacher_name':'井尻敬','day':4,'time':3},
-      {'lecture_name':'情報通信技術英語','teacher_name':'山崎','day':5,'time':1},
-      {'lecture_name':'組込みシステム','teacher_name':'菅谷','day':5,'time':2},
-    ]'''
-
+    #データベースから時間割を取得
     conn = sqlite3.connect('reclass.db')
     conn.row_factory = dict_factory
     cur = conn.cursor()
@@ -50,6 +41,10 @@ class Home:
 
 
   def open(self):
+    '''ホーム画面を開き、イベント処理を行う.
+    Args: なし
+    Returns: なし
+    '''
     width = 16
     #画面レイアウト
     #時間割レイアウト
@@ -213,6 +208,7 @@ class Home:
         ID = config_ini['Scomb']['ID']
         PASSWORD = config_ini['Scomb']['Password']
         status , msg = get_timetable(ID,PASSWORD)
+        #時間割取得成功したら
         if status == 0:
           conn = sqlite3.connect('reclass.db')
           conn.row_factory = dict_factory
@@ -224,6 +220,8 @@ class Home:
             self.time_table[l['day']][l['time']] = l
           main_window.close()
           self.open()
+        else:
+          print(msg)
 
 
 

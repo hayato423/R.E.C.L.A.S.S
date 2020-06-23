@@ -1,3 +1,9 @@
+'''
+disingner : 寺尾颯人
+date      : 2020.06.23
+purpose   : プログラムのメイン処理
+'''
+
 import home
 import sqlite3
 if __name__ == "__main__":

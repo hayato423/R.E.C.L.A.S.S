@@ -1,3 +1,9 @@
+'''
+disingner : 寺尾颯人
+date      : 2020.06.23
+purpose   : scombから時間割を取得
+'''
+
 import configparser
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -22,6 +28,15 @@ PASSWORD = config_ini['Scomb']['Password']
 
 
 def get_timetable(id,password):
+  '''
+  scombから時間割を取得する.
+  Args:
+    id(str): 学籍番号
+    password(str):scombのパスワード
+  Return:
+    int:更新の状態 0:成功 -1:失敗
+    str:終了メッセージ
+  '''
   status = 0
   msg = ''
   lectures = []
@@ -80,7 +95,6 @@ def get_timetable(id,password):
           if lecture_name != ' ' and teacher_name != ' ':
             lectures.append(lecture_data)
 
-      #print(lectures)
       #データベースを更新
       update_table(lectures)
       msg = '更新が完了しました'
@@ -100,6 +114,13 @@ def get_timetable(id,password):
 
 
 def update_table(lectures_list):
+  '''
+  取得した時間割をデータベースに保存する
+  Args:
+    lectures_list:([str,str,int,int])授業情報のリスト
+  Return:
+    なし
+  '''
   conn = sqlite3.connect('reclass.db')
   cur = conn.cursor()
   delete_all = 'delete from lectures'
