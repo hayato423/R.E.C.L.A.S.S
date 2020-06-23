@@ -2,6 +2,11 @@ import PySimpleGUI as sg
 import config
 import lecture
 import scomb
+from get_timetable import get_timetable
+import configparser
+import sqlite3
+from org_factory import dict_factory
+import sys,os
 
 class Home:
   def __init__(self):
@@ -9,9 +14,9 @@ class Home:
     self.time_table = [[None]*5 for i in range(6)]
     #lectureインスタンスを格納するリスト
     self.lecture_instances = [[None]*5 for i in range(6)]
-   
+
     #各授業の辞書型データ
-    self.lectures_data = [
+    ''''self.lectures_data = [
       {'lecture_name':'社会心理学','teacher_name':'岡田佳子','day':1,'time':2},
       {'lecture_name':'ソフトウェア工学','teacher_name':'中島　毅','day':2,'time':2},
       {'lecture_name':'高度情報演習1B','teacher_name':'中島　毅','day':2,'time':3},
@@ -24,7 +29,14 @@ class Home:
       {'lecture_name':'デジタルメディア処理２','teacher_name':'井尻敬','day':4,'time':3},
       {'lecture_name':'情報通信技術英語','teacher_name':'山崎','day':5,'time':1},
       {'lecture_name':'組込みシステム','teacher_name':'菅谷','day':5,'time':2},
-    ]
+    ]'''
+
+    conn = sqlite3.connect('reclass.db')
+    conn.row_factory = dict_factory
+    cur = conn.cursor()
+    cur.execute('select * from lectures')
+    new_lectures_list = cur.fetchall()
+    self.lectures_data = new_lectures_list
 
     #各課題の辞書型データ
     self.task_data=[
@@ -33,7 +45,8 @@ class Home:
 
     #授業のデータを時間割リストに格納
     for l in self.lectures_data:
-      self.time_table[l['day']-1][l['time']-1] = l
+      self.time_table[l['day']][l['time']] = l
+
 
 
   def open(self):
@@ -41,7 +54,7 @@ class Home:
     #画面レイアウト
     #時間割レイアウト
     timetable_layout = [
-      [sg.Text('Main Window'),sg.Button('設定',key='config_btn'),sg.Button('Scomb',key='scomb_btn'),sg.Button('更新',key='update_lecture')],
+      [sg.Text('Main Window'),sg.Button('設定',key='config_btn'),sg.Button('Scomb',key='scomb_btn'),sg.Button('更新',key='update_timetable')],
       [sg.Text('',size=(2,1)),
       sg.Text('月',size=(width,1),justification='center'),
       sg.Text('火',size=(width,1),justification='center'),
@@ -193,5 +206,27 @@ class Home:
         if self.lecture_instances[5][4] is not None:
           self.lecture_instances[5][4].open()
 
+      elif main_event == 'update_timetable':
+        #config.iniからidとパスワードを読み込み
+        config_ini = configparser.ConfigParser()
+        config_ini.read('config.ini',encoding='utf-8')
+        ID = config_ini['Scomb']['ID']
+        PASSWORD = config_ini['Scomb']['Password']
+        status , msg = get_timetable(ID,PASSWORD)
+        if status == 0:
+          conn = sqlite3.connect('reclass.db')
+          conn.row_factory = dict_factory
+          cur = conn.cursor()
+          cur.execute('select * from lectures')
+          new_lectures_list = cur.fetchall()
+          self.lectures_data = new_lectures_list
+          for l in self.lectures_data:
+            self.time_table[l['day']][l['time']] = l
+          main_window.close()
+          self.open()
+
+
+
     main_window.close()
+
 

@@ -35,6 +35,7 @@ def get_timetable(id,password):
   wait.until(EC.presence_of_all_elements_located)
 
   try:
+    #ログインボタンをクリック
     login_button = driver.find_element_by_id("loginField")
     login_button.click()
     wait.until(EC.presence_of_all_elements_located)
@@ -46,6 +47,7 @@ def get_timetable(id,password):
     driver.get(basic_auth_url)
     wait.until(EC.presence_of_all_elements_located)
 
+    #次へボタンをクリック
     next_button = driver.find_element_by_id('continueButton')
     next_button.click()
     wait.until(EC.presence_of_all_elements_located)
@@ -70,16 +72,20 @@ def get_timetable(id,password):
           teacher_name = teacher_name.replace('\u3000',' ')
           teacher_name = teacher_name.replace('\n','')
           lecture_data = [lecture_name,teacher_name,day_num,time-1]
+          #曜日番号を更新
           day_num += 1
           if day_num == 7:
             day_num = 0
+          #授業の情報があるならlecturesに追加
           if lecture_name != ' ' and teacher_name != ' ':
             lectures.append(lecture_data)
 
       #print(lectures)
+      #データベースを更新
       update_table(lectures)
       msg = '更新が完了しました'
-
+      status = 0
+      return status,msg
     else:
       msg = 'ログインに失敗しました'
       status = -1
@@ -87,7 +93,9 @@ def get_timetable(id,password):
   except TimeoutException as te:
       print(te)
   except Exception as e:
-      print(e)
+      msg = 'エラーが発生しました\n' + e
+      status = -1
+      return status,msg
 
 
 
@@ -100,7 +108,6 @@ def update_table(lectures_list):
       query = 'insert into  lectures (lecture_name,teacher_name,day,time) values(?,?,?,?)'
       cur.execute(query,tuple(lec))
   conn.commit()
+  conn.close()
 
-
-get_timetable(ID,PASSWORD)
 
