@@ -1,24 +1,24 @@
 import PySimpleGUI as sg
-from config_save import save
+from config_save import timesave
 
-class config:
+class Config:
 
   def open(self):
    #画面の作成(入力フォームなど)
-   layout = [
+   config_layout = [
     [sg.Text('課題通知時間',font=('IPAゴシック',16),
     text_color = '#696969',relief = sg.RELIEF_RAISED,background_color = '#afeeee')],
-    [sg.Text('日前              '),sg.InputText(key = 'alert_task')],
+    [sg.Text('〇日前に通知 '),sg.InputText(key = 'alert_task')],
     [sg.Text('Zoom接続時間'),sg.InputText(key = 'conect_zoom')],
     [sg.Text('更新間隔'),sg.InputText(key = 'update')],
     [sg.Button('保存')],
     [sg.Button('キャンセル')]
    ]
-   window = sg.config_Window('設定登録',layout=layout,size=(300,200))
+   config_window = sg.Window('設定登録',layout=config_layout,size=(300,200))
    
-   #入力されたIDとPasswordを正誤判定
+   #入力された設定を正誤判定
    while True:
-      event , values = window.read()
+      event , values = config_window.read()
       if event == 'OK':
         if len(values['alert_task']) >= 2:
           show_message = "通知時間は一桁にしてください。"
@@ -37,4 +37,4 @@ class config:
         window.close()
       if event is None:
         break
-      window.close()
+      config_window.close()
