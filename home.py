@@ -9,7 +9,7 @@ class Home:
     self.time_table = [[None]*5 for i in range(6)]
     #lectureインスタンスを格納するリスト
     self.lecture_instances = [[None]*5 for i in range(6)]
-
+   
     #各授業の辞書型データ
     self.lectures_data = [
       {'lecture_name':'社会心理学','teacher_name':'岡田佳子','day':1,'time':2},
@@ -26,15 +26,21 @@ class Home:
       {'lecture_name':'組込みシステム','teacher_name':'菅谷','day':5,'time':2},
     ]
 
+    #各課題の辞書型データ
+    self.task_data=[
+      {'lecture_name':'ソフトウェア工学','task_name':'シークエンス図','deadline':'??/!!'}
+    ]
+
     #授業のデータを時間割リストに格納
     for l in self.lectures_data:
       self.time_table[l['day']-1][l['time']-1] = l
 
 
   def open(self):
-    width = 15
+    width = 16
     #画面レイアウト
-    main_layout = [
+    #時間割レイアウト
+    timetable_layout = [
       [sg.Text('Main Window'),sg.Button('設定',key='config_btn'),sg.Button('Scomb',key='scomb_btn'),sg.Button('更新',key='update_lecture')],
       [sg.Text('',size=(2,1)),
       sg.Text('月',size=(width,1),justification='center'),
@@ -50,19 +56,25 @@ class Home:
       [sg.Text('5')]
     ]
 
-
-
-
     #時間割に基づいてレイアウトを追加
     for time in range(5):
       for day in range(6):
         if self.time_table[day][time] is None:
-          main_layout[time+2].append(sg.Button('',key=str(day)+str(time),size=(width,3)))
+          timetable_layout[time+2].append(sg.Button('',key=str(day)+str(time),size=(width,3)))
         else:
           lec = self.time_table[day][time]
-          main_layout[time+2].append(sg.Button(lec['lecture_name'],key=str(day)+str(time),size=(width,3)))
+          timetable_layout[time+2].append(sg.Button(lec['lecture_name'],key=str(day)+str(time),size=(width,3)))
           instance = lecture.Lecture(lec['lecture_name'],lec['teacher_name'])
           self.lecture_instances[day][time] = instance
+
+    #課題表示レイアウト
+    task_layout=[
+      [sg.Text('ソフトウェア工学')],
+      [sg.Text('シークエンス図')],
+      [sg.Text('2020/??/!!')]
+    ]
+
+    main_layout=[[sg.Frame('',timetable_layout),sg.Frame('課題一覧',task_layout)]]
 
 
 
@@ -182,8 +194,4 @@ class Home:
           self.lecture_instances[5][4].open()
 
     main_window.close()
-
-
-
-
 
