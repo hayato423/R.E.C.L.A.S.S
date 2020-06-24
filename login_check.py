@@ -1,5 +1,3 @@
-import requests
-from bs4 import BeautifulSoup
 from selenium import webdriver
 import time
 from selenium.webdriver.chrome.options import Options
@@ -32,11 +30,11 @@ def login(USER,PASS):
      cur_url = browser.current_url
      judge = 0
      if cur_url == 'https://scomb.shibaura-it.ac.jp/portal/contents/home/':
-      judge = 1    
+      judge = 1
       return judge
      elif cur_url != 'https://scomb.shibaura-it.ac.jp/portal/contents/home/':
       judge = 2
-      return judge   
+      return judge
     except TimeoutException as te:
      judge = 3
      return judge
