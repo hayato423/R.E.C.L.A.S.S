@@ -42,7 +42,7 @@ def get_timetable(id,password):
   lectures = []
 
   options = Options()
-  options.add_argument('--headless')
+  #options.add_argument('--headless')
   driver = webdriver.Chrome(chrome_options=options)
   wait = WebDriverWait(driver,20)
   scomb_url = 'https://scomb.shibaura-it.ac.jp/portal/index'
@@ -99,17 +99,18 @@ def get_timetable(id,password):
       update_table(lectures)
       msg = '更新が完了しました'
       status = 0
-      return status,msg
     else:
       msg = 'ログインに失敗しました'
       status = -1
-      return status,msg
   except TimeoutException as te:
       print(te)
   except Exception as e:
-      msg = 'エラーが発生しました\n' + e
+      msg = 'エラーが発生しました'
       status = -1
-      return status,msg
+  finally:
+    driver.quit()
+    return status,msg
+
 
 
 
