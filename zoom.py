@@ -13,6 +13,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.action_chains import ActionChains
 import chromedriver_binary
+import os
+import signal
 from time import sleep
 
 
@@ -24,13 +26,19 @@ def join_meeting(url):
   Return:
     なし
   '''
-  driver = webdriver.Chrome()
-  wait = WebDriverWait(driver,20)
-  #引数のurlにアクセス
-  driver.get(url)
-  wait.until(EC.invisibility_of_element_located)
-  #launch meeting をクリック
-  launch_meeting_button = driver.find_element_by_xpath("//div[@class='_2XjT-0pJ']/div/div[2]/h3/a[1]")
-  launch_meeting_button.click()
-  sleep(1)
+  try:
+    driver = webdriver.Chrome()
+    wait = WebDriverWait(driver,20)
+    #引数のurlにアクセス
+    driver.get(url)
+    wait.until(EC.invisibility_of_element_located)
+    #launch meeting をクリック
+    launch_meeting_button = driver.find_element_by_xpath("//div[@class='_2XjT-0pJ']/div/div[2]/h3/a[1]")
+    launch_meeting_button.click()
+  except Exception as e:
+    print(e)
+  finally:
+    os.kill(driver.service.process.pid,signal.SIGTERM)
 
+
+join_meeting('https://shibaura-it.zoom.us/j/95676422596')
