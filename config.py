@@ -1,3 +1,6 @@
+#製作者:尾崎夢斗
+#制作日時:6/29
+#
 import PySimpleGUI as sg
 from config_save import timesave
 
@@ -5,6 +8,7 @@ class Config:
 
   def open(self):
    #画面の作成(入力フォームなど)
+   """設定情報を保存する"""
    config_layout = [
     [sg.Text('課題通知時間',font=('IPAゴシック',16),
     text_color = '#696969',relief = sg.RELIEF_RAISED,background_color = '#afeeee')],
@@ -34,7 +38,7 @@ class Config:
           show_message = "登録完了しました。"
           sg.popup(show_message)
       if event == 'キャンセル':
-        window.close()
+        config_window.close()
       if event is None:
         break
       config_window.close()
