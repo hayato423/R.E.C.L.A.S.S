@@ -1,7 +1,8 @@
-
+#製作者:尾崎夢斗
+#制作日時:6/29
 import configparser 
 
-#iniファイルへの書き込む情報
+"""config.ini.txtへ設定情報を書き込む"""
 def timesave(alert_task,conect_zoom,update):
  config = configparser.ConfigParser()
  section1 = 'Config'
