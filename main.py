@@ -1,22 +1,25 @@
+'''
+disingner : 寺尾颯人
+date      : 2020.06.23
+purpose   : プログラムのメイン処理
+'''
+
 import home
-import threading
-import datetime
-import time
-import sys
+import sqlite3
+if __name__ == "__main__":
+  dbname = 'reclass.db'
+  #データベース接続
+  conn = sqlite3.connect(dbname)
+  cur = conn.cursor()
+  #テーブル作成
+  CREATE_LECTURES_TABLE = '''CREATE TABLE IF NOT EXISTS lectures(lecture_name TEXT, teacher_name TEXT, day INTEGER, time INTERGER )'''
+  cur.execute(CREATE_LECTURES_TABLE)
+  CREATE_TASKS_TABLE = '''CREATE TABLE IF NOT EXISTS tasks(lecture_name TEXT, teacher_name TEXT, task_name TEXT, submit_state INTEGER,deadline DATETIME)'''
+  cur.execute(CREATE_TASKS_TABLE)
+  CREATE_ZOOMURL_TABLE = ''' CREATE TABLE IF NOT EXISTS zoomURL(lecutre_name TEXT, url TEXT)'''
+  cur.execute(CREATE_ZOOMURL_TABLE)
+  conn.commit()
 
-
-home_window = home.Home()
-
-def func():
-  while True:
-    dt_now = datetime.datetime.now()
-    print(dt_now.strftime('%Y年%m月%d日 %H:%M:%S'))
-    time.sleep(1)
-
-
-if __name__== '__main__':
-  thread_1 = threading.Thread(target=home_window.open)
-  thread_2 = threading.Thread(target=func)
-
-  thread_1.start()
-  thread_2.start()
+  home_window = home.Home()
+  home_window.open()
+  conn.close()

@@ -1,7 +1,18 @@
+'''
+disingner : 寺尾颯人
+date      : 2020.06.23
+purpose   : ホーム画面クラス
+'''
+
 import PySimpleGUI as sg
 import config
 import lecture
 import scomb
+from get_timetable import get_timetable
+import configparser
+import sqlite3
+from org_factory import dict_factory
+import sys,os
 
 class Home:
   def __init__(self):
@@ -10,32 +21,35 @@ class Home:
     #lectureインスタンスを格納するリスト
     self.lecture_instances = [[None]*5 for i in range(6)]
 
-    #各授業の辞書型データ
-    self.lectures_data = [
-      {'lecture_name':'社会心理学','teacher_name':'岡田佳子','day':1,'time':2},
-      {'lecture_name':'ソフトウェア工学','teacher_name':'中島　毅','day':2,'time':2},
-      {'lecture_name':'高度情報演習1B','teacher_name':'中島　毅','day':2,'time':3},
-      {'lecture_name':'高度情報演習1B','teacher_name':'中島　毅','day':2,'time':4},
-      {'lecture_name':'データベース','teacher_name':'	木村　昌臣','day':3,'time':1},
-      {'lecture_name':'高度情報演習１A','teacher_name':'杉本','day':3,'time':3},
-      {'lecture_name':'高度情報演習１A','teacher_name':'杉本','day':3,'time':4},
-      {'lecture_name':'上級プログラミング','teacher_name':'杉本','day':4,'time':1},
-      {'lecture_name':'上級プログラミング','teacher_name':'杉本','day':4,'time':2},
-      {'lecture_name':'デジタルメディア処理２','teacher_name':'井尻敬','day':4,'time':3},
-      {'lecture_name':'情報通信技術英語','teacher_name':'山崎','day':5,'time':1},
-      {'lecture_name':'組込みシステム','teacher_name':'菅谷','day':5,'time':2},
+    #データベースから時間割を取得
+    conn = sqlite3.connect('reclass.db')
+    conn.row_factory = dict_factory
+    cur = conn.cursor()
+    cur.execute('select * from lectures')
+    new_lectures_list = cur.fetchall()
+    self.lectures_data = new_lectures_list
+
+    #各課題の辞書型データ
+    self.task_data=[
+      {'lecture_name':'ソフトウェア工学','task_name':'シークエンス図','deadline':'??/!!'}
     ]
 
     #授業のデータを時間割リストに格納
     for l in self.lectures_data:
-      self.time_table[l['day']-1][l['time']-1] = l
+      self.time_table[l['day']][l['time']] = l
+
 
 
   def open(self):
-    width = 15
+    '''ホーム画面を開き、イベント処理を行う.
+    Args: なし
+    Returns: なし
+    '''
+    width = 16
     #画面レイアウト
-    main_layout = [
-      [sg.Text('Main Window'),sg.Button('設定',key='config_btn'),sg.Button('Scomb',key='scomb_btn'),sg.Button('更新',key='update_lecture')],
+    #時間割レイアウト
+    timetable_layout = [
+      [sg.Text('Main Window'),sg.Button('設定',key='config_btn'),sg.Button('Scomb',key='scomb_btn'),sg.Button('更新',key='update_timetable')],
       [sg.Text('',size=(2,1)),
       sg.Text('月',size=(width,1),justification='center'),
       sg.Text('火',size=(width,1),justification='center'),
@@ -50,19 +64,25 @@ class Home:
       [sg.Text('5')]
     ]
 
-
-
-
     #時間割に基づいてレイアウトを追加
     for time in range(5):
       for day in range(6):
         if self.time_table[day][time] is None:
-          main_layout[time+2].append(sg.Button('',key=str(day)+str(time),size=(width,3)))
+          timetable_layout[time+2].append(sg.Button('',key=str(day)+str(time),size=(width,3)))
         else:
           lec = self.time_table[day][time]
-          main_layout[time+2].append(sg.Button(lec['lecture_name'],key=str(day)+str(time),size=(width,3)))
+          timetable_layout[time+2].append(sg.Button(lec['lecture_name'],key=str(day)+str(time),size=(width,3)))
           instance = lecture.Lecture(lec['lecture_name'],lec['teacher_name'])
           self.lecture_instances[day][time] = instance
+
+    #課題表示レイアウト
+    task_layout=[
+      [sg.Text('ソフトウェア工学')],
+      [sg.Text('シークエンス図')],
+      [sg.Text('2020/??/!!')]
+    ]
+
+    main_layout=[[sg.Frame('',timetable_layout),sg.Frame('課題一覧',task_layout)]]
 
 
 
@@ -181,9 +201,31 @@ class Home:
         if self.lecture_instances[5][4] is not None:
           self.lecture_instances[5][4].open()
 
+      elif main_event == 'update_timetable':
+        #config.iniからidとパスワードを読み込み
+        config_ini = configparser.ConfigParser()
+        config_ini.read('config.ini',encoding='utf-8')
+        ID = config_ini['Scomb']['ID']
+        PASSWORD = config_ini['Scomb']['Password']
+        status , msg = get_timetable(ID,PASSWORD)
+        #時間割取得成功したら
+        if status == 0:
+          conn = sqlite3.connect('reclass.db')
+          conn.row_factory = dict_factory
+          cur = conn.cursor()
+          cur.execute('select * from lectures')
+          new_lectures_list = cur.fetchall()
+          self.lectures_data = new_lectures_list
+          for l in self.lectures_data:
+            self.time_table[l['day']][l['time']] = l
+          sg.Popup(msg)
+          main_window.close()
+          self.open()
+        else:
+          sg.Popup(msg)
+
+
+
     main_window.close()
-
-
-
 
 
