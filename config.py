@@ -1,3 +1,9 @@
+"""
+desiner:尾崎夢斗
+date:6/29
+purpose:設定画面の出力
+"""
+
 import PySimpleGUI as sg
 from config_save import timesave
 
@@ -20,21 +26,21 @@ class Config:
    while True:
       event , values = config_window.read()
       if event == 'OK':
-        if len(values['alert_task']) >= 2:
+        if len(values['alert_task']) > 2:
           show_message = "通知時間は一桁にしてください。"
           sg.popup(show_message)
-        elif len(values['conect_zoom']) >= 3:
+        elif len(values['conect_zoom']) > 3:
           show_message = "接続時間は二桁にして下さい。"
           sg.popup(show_message)
-        elif len(values['update']) >= 3:
+        elif len(values['update']) > 3:
           show_message = "更新間隔は二桁にして下さい。"
           sg.popup(show_message)
         else :
-          save(values['alert_task'],values['conect_zoom'],values['update'])
+          timesave(values['alert_task'],values['conect_zoom'],values['update'])
           show_message = "登録完了しました。"
           sg.popup(show_message)
       if event == 'キャンセル':
-        window.close()
+        config_window.close()
       if event is None:
         break
       config_window.close()
