@@ -218,10 +218,11 @@ class Home:
           self.lectures_data = new_lectures_list
           for l in self.lectures_data:
             self.time_table[l['day']][l['time']] = l
+          sg.Popup(msg)
           main_window.close()
           self.open()
         else:
-          print(msg)
+          sg.Popup(msg)
 
 
 

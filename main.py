@@ -12,12 +12,12 @@ if __name__ == "__main__":
   conn = sqlite3.connect(dbname)
   cur = conn.cursor()
   #テーブル作成
-  create_lectures_table = '''CREATE TABLE IF NOT EXISTS lectures(lecture_name TEXT, teacher_name TEXT, day INTEGER, time INTERGER )'''
-  cur.execute(create_lectures_table)
-  create_tasks_table = '''CREATE TABLE IF NOT EXISTS tasks(lecture_name TEXT, teacher_name TEXT, task_name TEXT, submit_state INTEGER,deadline DATETIME)'''
-  cur.execute(create_tasks_table)
-  create_zoomURL_table = ''' CREATE TABLE IF NOT EXISTS zoomURL(lecutre_name TEXT, url TEXT)'''
-  cur.execute(create_zoomURL_table)
+  CREATE_LECTURES_TABLE = '''CREATE TABLE IF NOT EXISTS lectures(lecture_name TEXT, teacher_name TEXT, day INTEGER, time INTERGER )'''
+  cur.execute(CREATE_LECTURES_TABLE)
+  CREATE_TASKS_TABLE = '''CREATE TABLE IF NOT EXISTS tasks(lecture_name TEXT, teacher_name TEXT, task_name TEXT, submit_state INTEGER,deadline DATETIME)'''
+  cur.execute(CREATE_TASKS_TABLE)
+  CREATE_ZOOMURL_TABLE = ''' CREATE TABLE IF NOT EXISTS zoomURL(lecutre_name TEXT, url TEXT)'''
+  cur.execute(CREATE_ZOOMURL_TABLE)
   conn.commit()
 
   home_window = home.Home()
