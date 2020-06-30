@@ -13,6 +13,11 @@ import configparser
 import sqlite3
 from org_factory import dict_factory
 import sys,os
+import threading
+import schedule
+import time
+import datetime
+
 
 class Home:
   def __init__(self):
@@ -39,12 +44,30 @@ class Home:
       self.time_table[l['day']][l['time']] = l
 
 
+  def job(self):
+    print(datetime.datetime.now())
+
+  def cron(self):
+    schedule.every(1).seconds.do(self.job)
+    while True:
+      schedule.run_pending()
+      time.sleep(1)
+
+
 
   def open(self):
     '''ホーム画面を開き、イベント処理を行う.
     Args: なし
     Returns: なし
     '''
+
+    '''マルチスレッド処理'''
+    t1 = threading.Thread(target=self.cron)
+    t1.setDaemon(True)
+    t1.start()
+
+
+    '''画面構成処理'''
     width = 16
     #画面レイアウト
     #時間割レイアウト
@@ -227,5 +250,6 @@ class Home:
 
 
     main_window.close()
+    return 0
 
 

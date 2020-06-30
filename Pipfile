@@ -10,6 +10,7 @@ pylint = "*"
 pysimplegui = "*"
 selenium = "*"
 chromedriver-binary = "==83.0.4103.39"
+schedule = "*"
 
 [requires]
 python_version = "3.8"
