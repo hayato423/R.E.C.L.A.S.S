@@ -3,9 +3,6 @@ designer : 坂下直樹
 date : 編集日(2020.06.23)
 purpose : scombのログイン確認をする
 """
-
-import requests
-from bs4 import BeautifulSoup
 from selenium import webdriver
 import time
 from selenium.webdriver.chrome.options import Options
@@ -38,7 +35,7 @@ def login(USER,PASS):
      cur_url = browser.current_url
      judge = 0
      if cur_url == 'https://scomb.shibaura-it.ac.jp/portal/contents/home/':
-      judge = 1    
+      judge = 1
       return judge
     except TimeoutException as te:
      judge = 2
