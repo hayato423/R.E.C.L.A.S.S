@@ -1,15 +1,18 @@
-#製作者:尾崎夢斗
-#制作日時:6/29
+"""
+desiner:尾崎夢斗
+date:6/29
+purpose:iniファイルへ設定情報を書き込み
+"""
+
 import configparser 
 
-"""config.ini.txtへ設定情報を書き込む"""
-def timesave(alert_task,conect_zoom,update):
+def timesave(ALERT_TASK,CONECT_ZOOM,UPDATE):
  config = configparser.ConfigParser()
  section1 = 'Config'
  config.add_section(section1)
- config.set(section1, 'alert_task', alert_task)    
- config.set(section1, 'conect_zoom', conect_zoom)
- config.set(section1, 'update',update)
+ config.set(section1, 'alert_task', ALERT_TASK)    
+ config.set(section1, 'conect_zoom', CONECT_ZOOM)
+ config.set(section1, 'update',UPDATE)
 
 #iniファイルへの書き込み
  with open('config.ini','w') as file:
