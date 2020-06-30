@@ -3,6 +3,7 @@ disingner : 寺尾颯人
 date      : 2020.06.23
 purpose   : zoomのミーティングに参加する
 '''
+import PySimpleGUI as sg
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.alert import Alert
@@ -36,7 +37,7 @@ def join_meeting(url):
     launch_meeting_button = driver.find_element_by_xpath("//div[@class='_2XjT-0pJ']/div/div[2]/h3/a[1]")
     launch_meeting_button.click()
   except Exception as e:
-    print(e)
+    sg.popup("アクセスに失敗しました")
   finally:
     os.kill(driver.service.process.pid,signal.SIGTERM)
 
