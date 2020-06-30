@@ -40,6 +40,3 @@ def join_meeting(url):
     sg.popup("アクセスに失敗しました")
   finally:
     os.kill(driver.service.process.pid,signal.SIGTERM)
-
-
-join_meeting('https://shibaura-it.zoom.us/j/95676422596')
