@@ -1,3 +1,8 @@
+"""
+designer : 坂下直樹
+date : 編集日(2020.06.23)
+purpose : scombのログイン確認をする
+"""
 from selenium import webdriver
 import time
 from selenium.webdriver.chrome.options import Options
@@ -32,14 +37,11 @@ def login(USER,PASS):
      if cur_url == 'https://scomb.shibaura-it.ac.jp/portal/contents/home/':
       judge = 1
       return judge
-     elif cur_url != 'https://scomb.shibaura-it.ac.jp/portal/contents/home/':
-      judge = 2
-      return judge
     except TimeoutException as te:
-     judge = 3
+     judge = 2
      return judge
     except Exception as e:
-     judge = 4
+     judge = 3
      return judge
     finally:
      browser.close()

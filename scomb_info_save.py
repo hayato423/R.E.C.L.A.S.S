@@ -1,3 +1,9 @@
+"""
+designer : 坂下直樹
+date : 編集日(2020.06.D23)
+purpose : 入力フォームにて入力されたものをconfig.iniに保存する
+"""
+
 import configparser 
 
 #iniファイルへの書き込む情報
