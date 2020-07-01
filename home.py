@@ -226,10 +226,10 @@ class Home:
 
       elif main_event == 'update_timetable':
         #config.iniからidとパスワードを読み込み
-        config_ini = configparser.ConfigParser()
-        config_ini.read('config.ini',encoding='utf-8')
-        ID = config_ini['Scomb']['ID']
-        PASSWORD = config_ini['Scomb']['Password']
+        scomb_ini = configparser.ConfigParser()
+        scomb_ini.read('scomb.ini',encoding='utf-8')
+        ID = scomb_ini['Scomb']['ID']
+        PASSWORD = scomb_ini['Scomb']['Password']
         status , msg = get_timetable(ID,PASSWORD)
         #時間割取得成功したら
         if status == 0:

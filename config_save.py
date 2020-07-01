@@ -15,6 +15,6 @@ def timesave(ALERT_TASK,CONECT_ZOOM,UPDATE):
  config.set(section1, 'update',UPDATE)
 
 #iniファイルへの書き込み
- with open('config.ini','w') as file:
+ with open('config.ini','a') as file:
      config.write(file)
 
