@@ -18,25 +18,29 @@ def confirm_lecture(day,time):
     time : 時限
     Returns: なし
   '''
-  conn = sqlite3.connect('reclass.db')
-  cur = conn.cursor()
-  SQL = 'select lecture_name from lectures where day=? and time=?'
-  cur.execute(SQL,(day,time))
-  execte_result = cur.fetchone()
-  LECTURE_NAME = execte_result[0]
-  if LECTURE_NAME != None:
-    CONFIRM_STR = '授業「'+LECTURE_NAME+'」が始まります。ミーティングに参加しますか？'
-    is_join = sg.PopupYesNo(CONFIRM_STR)
-    if is_join == 'Yes':
-      SQL = 'select url from zoomURL where lecture_name = ?'
-      cur.execute(SQL,(LECTURE_NAME,))
-      execte_result = cur.fetchone()
-      URL = execte_result[0]
-      if URL != None:
-        print(URL)
-        join_meeting(URL)
-      else:
-        sg.popup('URLが見つかりませんでした')
-
-
-confirm_lecture(2,0)
+  try:
+    #データベースに接続
+    conn = sqlite3.connect('reclass.db')
+    cur = conn.cursor()
+    #day曜日のtime時間目の授業名を取得する
+    SQL = 'select lecture_name from lectures where day=? and time=?'
+    cur.execute(SQL,(day,time))
+    execte_result = cur.fetchone()
+    #授業があるならポップアップ表示
+    if execte_result != None:
+      LECTURE_NAME = execte_result[0]
+      CONFIRM_STR = '授業「'+LECTURE_NAME+'」が始まります。ミーティングに参加しますか？'
+      is_join = sg.PopupYesNo(CONFIRM_STR)
+      if is_join == 'Yes':
+        #授業名からURLを取得
+        SQL = 'select url from zoomURL where lecture_name = ?'
+        cur.execute(SQL,(LECTURE_NAME,))
+        execte_result = cur.fetchone()
+        if execte_result != None:
+          URL = execte_result[0]
+          #URLが存在するなら接続
+          join_meeting(URL)
+        else:
+          sg.popup('URLが見つかりませんでした')
+  except Exception as e:
+    sg.popup(e)
