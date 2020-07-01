@@ -3,10 +3,7 @@ disingner : 寺尾颯人
 date      : 2020.07.01
 purpose   : 毎時間授業があるか確認する.
 '''
-
-import schedule
-import time
-import datetime
+from plyer import notification
 import sqlite3
 import PySimpleGUI as sg
 from zoom import join_meeting
@@ -30,6 +27,11 @@ def confirm_lecture(day,time):
     if execte_result != None:
       LECTURE_NAME = execte_result[0]
       CONFIRM_STR = '授業「'+LECTURE_NAME+'」が始まります。ミーティングに参加しますか？'
+      notification.notify(
+        title='授業通知',
+        message = CONFIRM_STR,
+        app_name = 'reclass'
+      )
       is_join = sg.PopupYesNo(CONFIRM_STR)
       if is_join == 'Yes':
         #授業名からURLを取得
