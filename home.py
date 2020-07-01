@@ -54,6 +54,30 @@ class Home:
       time.sleep(1)
 
 
+  def update_timetable(self,window):
+    #config.iniからidとパスワードを読み込み
+    scomb_ini = configparser.ConfigParser()
+    scomb_ini.read('scomb.ini',encoding='utf-8')
+    ID = scomb_ini['Scomb']['ID']
+    PASSWORD = scomb_ini['Scomb']['Password']
+    status , msg = get_timetable(ID,PASSWORD)
+    #時間割取得成功したら
+    if status == 0:
+      conn = sqlite3.connect('reclass.db')
+      conn.row_factory = dict_factory
+      cur = conn.cursor()
+      cur.execute('select * from lectures')
+      new_lectures_list = cur.fetchall()
+      self.lectures_data = new_lectures_list
+      for l in self.lectures_data:
+        self.time_table[l['day']][l['time']] = l
+      sg.Popup(msg)
+      window.close()
+      self.open()
+    else:
+      sg.Popup(msg)
+
+
 
   def open(self):
     '''ホーム画面を開き、イベント処理を行う.
@@ -225,27 +249,8 @@ class Home:
           self.lecture_instances[5][4].open()
 
       elif main_event == 'update_timetable':
-        #config.iniからidとパスワードを読み込み
-        scomb_ini = configparser.ConfigParser()
-        scomb_ini.read('scomb.ini',encoding='utf-8')
-        ID = scomb_ini['Scomb']['ID']
-        PASSWORD = scomb_ini['Scomb']['Password']
-        status , msg = get_timetable(ID,PASSWORD)
-        #時間割取得成功したら
-        if status == 0:
-          conn = sqlite3.connect('reclass.db')
-          conn.row_factory = dict_factory
-          cur = conn.cursor()
-          cur.execute('select * from lectures')
-          new_lectures_list = cur.fetchall()
-          self.lectures_data = new_lectures_list
-          for l in self.lectures_data:
-            self.time_table[l['day']][l['time']] = l
-          sg.Popup(msg)
-          main_window.close()
-          self.open()
-        else:
-          sg.Popup(msg)
+        self.update_timetable(main_window)
+
 
 
 
