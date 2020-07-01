@@ -27,6 +27,7 @@ def confirm_lecture(day,time):
     if execte_result != None:
       LECTURE_NAME = execte_result[0]
       CONFIRM_STR = '授業「'+LECTURE_NAME+'」が始まります。ミーティングに参加しますか？'
+      #windowsバルーン通知
       notification.notify(
         title='授業通知',
         message = CONFIRM_STR,
