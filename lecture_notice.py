@@ -30,8 +30,10 @@ def confirm_lecture(day,time):
     if is_join == 'Yes':
       SQL = 'select url from zoomURL where lecture_name = ?'
       cur.execute(SQL,(LECTURE_NAME,))
-      URL = cur.fetchone()
+      execte_result = cur.fetchone()
+      URL = execte_result[0]
       if URL != None:
+        print(URL)
         join_meeting(URL)
       else:
         sg.popup('URLが見つかりませんでした')
