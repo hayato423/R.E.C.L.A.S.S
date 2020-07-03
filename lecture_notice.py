@@ -1,6 +1,6 @@
 '''
 disingner : 寺尾颯人
-date      : 2020.07.01
+date      : 2020.07.04
 purpose   : 毎時間授業があるか確認し,通知,zoom参加を行う.
 '''
 from plyer import notification
@@ -77,7 +77,7 @@ def lecture_schedule():
   fifth_period_time = fifth_period_time.strftime("%H:%M")
 
   #スケジュール設定
-  schedule.every().day.at("08:55").do(confirm_lecture,day=datetime.date.today().weekday(),time=0).tag('lecture')
+  schedule.every().day.at(first_period_time).do(confirm_lecture,day=datetime.date.today().weekday(),time=0).tag('lecture')
   schedule.every().day.at(second_period_time).do(confirm_lecture,day=datetime.date.today().weekday(),time=1).tag('lecture')
   schedule.every().day.at(third_period_time).do(confirm_lecture,day=datetime.date.today().weekday(),time=2).tag('lecture')
   schedule.every().day.at(fourth_period_time).do(confirm_lecture,day=datetime.date.today().weekday(),time=3).tag('lecture')
