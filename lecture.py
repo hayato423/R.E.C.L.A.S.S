@@ -49,6 +49,8 @@ class Lecture:
         if len(value['zoom_url']) > 80:
           show_message = 'zoomURLは80字以下にしてください'
           sg.popup(show_message)
+        elif len(value['zoom_url']) == 0:
+          window.close()
         else:
           try:
             conn = sqlite3.connect('reclass.db')
