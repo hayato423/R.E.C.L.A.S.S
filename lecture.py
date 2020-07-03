@@ -53,11 +53,19 @@ class Lecture:
           try:
             conn = sqlite3.connect('reclass.db')
             cur = conn.cursor()
-            SQL = 'replace into zoomURL values(?,?)'
-            cur.execute(SQL,(self.lecture_name,value['zoom_url']))
+            EXIST_CONFIRM_QUERY = 'select lecture_name from zoomURL where lecture_name=?'
+            cur.execute(EXIST_CONFIRM_QUERY,(self.lecture_name,))
+            is_exist = cur.fetchall()
+            if is_exist == []:
+              INSERT_QUERY = 'insert into zoomURL values(?,?)'
+              cur.execute(INSERT_QUERY,(self.lecture_name,value['zoom_url']))
+            else:
+              UPDATE_QUERY = 'update zoomURL set url=? where lecture_name=?'
+              cur.execute(UPDATE_QUERY,(value['zoom_url'],self.lecture_name))
             conn.commit()
-          except sqlite3.Error:
+          except sqlite3.Error as e:
             sg.popup('データベース保存中にエラーが発生しました')
+            sg.popup(e)
           finally:
             conn.close()
             self.fetch_zoom_url(self.lecture_name)
