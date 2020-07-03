@@ -46,10 +46,10 @@ class Lecture:
       event ,value = window.read()
 
       if event == 'OK':
-        if len(value['zoom_url']) > 80:
+        '''if len(value['zoom_url']) > 80:
           show_message = 'zoomURLは80字以下にしてください'
-          sg.popup(show_message)
-        elif len(value['zoom_url']) == 0:
+          sg.popup(show_message)'''
+        if len(value['zoom_url']) == 0:
           window.close()
         else:
           try:
