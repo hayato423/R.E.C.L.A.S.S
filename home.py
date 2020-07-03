@@ -44,16 +44,6 @@ class Home:
       self.time_table[l['day']][l['time']] = l
 
 
-  def job(self):
-    print(datetime.datetime.now())
-
-  def cron(self):
-    schedule.every(1).seconds.do(self.job)
-    while True:
-      schedule.run_pending()
-      time.sleep(1)
-
-
   def update_timetable(self,window):
     #config.iniからidとパスワードを読み込み
     scomb_ini = configparser.ConfigParser()
@@ -85,10 +75,11 @@ class Home:
     Returns: なし
     '''
 
-    '''マルチスレッド処理'''
-    t1 = threading.Thread(target=self.cron)
+    '''マルチスレッド処理
+    t1 = threading.Thread(target=lecture_cron)
     t1.setDaemon(True)
-    t1.start()
+    #t1.start()
+    '''
 
 
     '''画面構成処理'''
@@ -134,14 +125,14 @@ class Home:
 
 
     #ウィンドウ生成
-    main_window = sg.Window('Main',layout=main_layout)
+    main_window = sg.Window('R.E.C.L.A.S.S',layout=main_layout)
     config_window = config.Config()
     scomb_window = scomb.Scomb()
 
 
 
     while True:
-      main_event , main_value = main_window.read()
+      main_event , main_value = main_window.read(timeout=100,timeout_key='timeout')
 
       if main_event is None:
         break
@@ -250,6 +241,9 @@ class Home:
 
       elif main_event == 'update_timetable':
         self.update_timetable(main_window)
+
+      elif main_event == 'timeout':
+        schedule.run_pending()
 
 
 
