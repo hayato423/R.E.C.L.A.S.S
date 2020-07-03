@@ -125,7 +125,7 @@ class Home:
 
 
     #ウィンドウ生成
-    main_window = sg.Window('Main',layout=main_layout)
+    main_window = sg.Window('R.E.C.L.A.S.S',layout=main_layout)
     config_window = config.Config()
     scomb_window = scomb.Scomb()
 
