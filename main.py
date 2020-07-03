@@ -6,7 +6,8 @@ purpose   : プログラムのメイン処理
 
 import home
 import sqlite3
-
+from lecture_notice import lecture_schedule,day_update
+import schedule
 
 if __name__ == "__main__":
   dbname = 'reclass.db'
@@ -21,6 +22,10 @@ if __name__ == "__main__":
   CREATE_ZOOMURL_TABLE = ''' CREATE TABLE IF NOT EXISTS zoomURL(lecture_name TEXT, url TEXT)'''
   cur.execute(CREATE_ZOOMURL_TABLE)
   conn.commit()
+
+  #授業スケジュールの設定
+  lecture_schedule()
+  schedule.every().day.at("00:00").do(day_update)
 
   home_window = home.Home()
   home_window.open()

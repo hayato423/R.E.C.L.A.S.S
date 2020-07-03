@@ -18,12 +18,7 @@ import datetime
 import sqlite3
 
 
-#config.iniの読み込み
-config_ini = configparser.ConfigParser()
-config_ini.read('config.ini',encoding='utf-8')
 
-ID = config_ini['Scomb']['ID']
-PASSWORD = config_ini['Scomb']['Password']
 
 
 
