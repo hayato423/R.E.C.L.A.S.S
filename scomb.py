@@ -29,12 +29,18 @@ class Scomb:
       event , values = window.read()
 
       if event == 'OK':
-        if len(values['scomb_ID']) > 11:
+        if   len(values['scomb_ID']) > 11 and  len(values['scomb_pass']) > 30:
+          show_message = "IDは11文字以下、パスワードは30文字以下にしてください。"
+          sg.popup(show_message)
+          continue
+        elif len(values['scomb_ID']) > 11:
           show_message = "IDは11文字以下にしてください。"
           sg.popup(show_message)
+          continue
         elif len(values['scomb_pass']) > 30:
           show_message = "パスワードは30文字以下にしてください。"
           sg.popup(show_message)
+          continue
         else :
           judge_login = login(values['scomb_ID'],values['scomb_pass'])
           if judge_login == 1:
