@@ -59,7 +59,7 @@ def lecture_schedule():
   '''
   config_ini = configparser.ConfigParser()
   config_ini.read('config.ini')
-  start_time = config_ini['Config']['conect_zoom']
+  start_time = config_ini['Config']['connect_zoom']
   #1限目
   first_period_time = datetime.datetime.combine(datetime.date.today(),datetime.time(9,0)) - datetime.timedelta(minutes=int(start_time))
   first_period_time = first_period_time.strftime("%H:%M")

@@ -12,9 +12,9 @@ def timesave(ALERT_TASK, CONECT_ZOOM, UPDATE):
     section1 = 'Config'
     config.add_section(section1)
     config.set(section1, 'alert_task', ALERT_TASK)
-    config.set(section1, 'conect_zoom', CONECT_ZOOM)
+    config.set(section1, 'connect_zoom', CONECT_ZOOM)
     config.set(section1, 'update', UPDATE)
 
 # iniファイルへの書き込み
-    with open('config.ini', 'a') as file:
+    with open('config.ini', 'w') as file:
         config.write(file)
