@@ -1,6 +1,6 @@
 """
-designer:中村友哉
-date:2020.07.02
+designer:中村友哉,寺尾颯人
+date:2020.07.07
 purpose:授業詳細画面表示
 """
 
@@ -49,7 +49,7 @@ class Lecture:
         '''if len(value['zoom_url']) > 80:
           show_message = 'zoomURLは80字以下にしてください'
           sg.popup(show_message)'''
-        if len(value['zoom_url']) == 0:
+        if value['zoom_url'] == self.zoom_url:
           window.close()
         else:
           try:
