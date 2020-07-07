@@ -15,7 +15,7 @@ from bs4 import BeautifulSoup
 import chromedriver_binary
 import re
 import sqlite3
-
+import datetime
 
 def task_scraping(ID,PASSWORD):
 
@@ -59,26 +59,38 @@ def task_scraping(ID,PASSWORD):
             onclick = soup.find(class_='list').find_all('a')
             for i in range(len(onclick)):
                 driver.implicitly_wait(5)
-                onclick_js.append(onclick[i].get('onclick'))
-                tasks.append(onclick[i].text)
-                task = [s.replace('\n\t\t\t\t\t\t\t\t\t','') for s in tasks]
-            return msg,task
-            
-            """
-            print(task)
-            print(onclick_js)
-            for i in range(len(onclick_js)):
-            driver.execute_script(str(onclick_js[i]))
-            wait.until(EC.presence_of_all_elements_located) 
-            close = driver.find_element_by_id('fancybox-close')
-            close.click()
-            """
+                onclick_js.append(onclick[i].get('onclick')[16:21])
+            #print(onclick_js)
+            date = datetime.date.today()
+            date = str(date).replace('-','')
+            #print(date)
+
+            for low in onclick_js:
+                urllib = 'https://scomb.shibaura-it.ac.jp/ScombPortlet/fancybox/lbLmsInit?primaryKey='+ low +'&selDate='+ date +'&request_locale=ja&format=1'
+                driver.get(urllib)
+                #wait.until(EC.presence_of_all_elements_located)
+                source_code = driver.page_source
+                soup = BeautifulSoup(source_code,'html.parser')
+                temp = soup.find_all('td')
+                title = temp[0].text
+                detail = temp[1].text
+                complete = temp[2].text
+                title = title.replace('\n','').replace('\t','').replace('\u3000','')
+                detail = detail.replace('\n','').replace('\t','').replace('\u3000','')
+                deadline = detail[detail.find('締切日：'):(detail.find('締切日：')+14)]
+                detail = detail[0:detail.find('締切日')]
+                teacher = detail[detail.find('教員名'):len(detail)]
+                detail = detail[0:detail.find('教員名')]
+                complete = complete.replace('\n','').replace('\t','').replace('\u3000','')
+                tasks.append([title,detail,teacher,deadline,complete])
+            return msg,tasks
         
         else:
             print('開けていません')
             msg = 'ログインに失敗しました'
-            task = None
-            return msg,task
+            tasks = None
+            return msg,tasks
+        
     except Exception as e:
         print('例外')
         print(e)
@@ -97,10 +109,8 @@ def task_write(tasks):
     conn = sqlite3.connect('reclass.db')
     c = conn.cursor()
 
-    c.execute('SELECT COUNT(*) FROM sqlite_master WHERE TYPE="table" AND NAME="tasks"')
-
-    if c.fetchone() == (0,):
-        c.execute('create table tasks(name string)')
+    c.execute('drop table tasks')
+    c.execute('create table tasks(name text,class text,teacher text,deadline text,complete text)')
 
     tasks = tuple(tasks)
 
@@ -109,7 +119,7 @@ def task_write(tasks):
     c.execute('delete from tasks')
     for task in tasks:
         print(task)
-        c.execute('insert into tasks (name) values(?)',(task,))
+        c.execute('insert into tasks (name,class,teacher,deadline,complete) values(?,?,?,?,?)',[task[0],task[1],task[2],task[3],task[4]])
     conn.commit()
     conn.close()
         
