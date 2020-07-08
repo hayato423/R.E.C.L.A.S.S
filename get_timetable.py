@@ -13,12 +13,18 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
-import chromedriver_binary
+#import chromedriver_binary
 import datetime
 import sqlite3
+import sys
+import os
 
-
-
+def resource_path(relative_path):
+  try:
+    base_path = sys._MEIPASS
+  except Exception:
+    base_path = os.path.dirname(__file__)
+  return os.path.join(base_path, relative_path)
 
 
 
@@ -35,10 +41,9 @@ def get_timetable(id,password):
   status = 0
   msg = ''
   lectures = []
-
   options = Options()
-  #options.add_argument('--headless')
-  driver = webdriver.Chrome(chrome_options=options)
+  options.add_argument('--headless')
+  driver = webdriver.Chrome(executable_path=resource_path('./driver/chromedriver.exe'), chrome_options=options)
   wait = WebDriverWait(driver,20)
   scomb_url = 'https://scomb.shibaura-it.ac.jp/portal/index'
   driver.get(scomb_url)

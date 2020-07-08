@@ -13,10 +13,11 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.action_chains import ActionChains
-import chromedriver_binary
+#import chromedriver_binary
 import os
 import signal
 from time import sleep
+from get_timetable import resource_path
 
 
 def join_meeting(url):
@@ -28,7 +29,7 @@ def join_meeting(url):
     なし
   '''
   try:
-    driver = webdriver.Chrome()
+    driver = webdriver.Chrome(executable_path=resource_path('./driver/chromedriver.exe'))
     wait = WebDriverWait(driver,20)
     #引数のurlにアクセス
     driver.get(url)
