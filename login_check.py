@@ -11,11 +11,12 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
-import chromedriver_binary
+from get_timetable import resource_path
+#import chromedriver_binary
 
 def login(USER,PASS):
     options = Options()
-    browser = webdriver.Chrome(chrome_options=options)
+    browser = webdriver.Chrome(executable_path=resource_path('./driver/chromedriver.exe'),chrome_options=options)
     wait = WebDriverWait(browser,20)
     url_login = "https://scomb.shibaura-it.ac.jp/portal/index"
     browser.get(url_login)

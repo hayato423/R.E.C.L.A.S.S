@@ -8,6 +8,9 @@ import home
 import sqlite3
 from lecture_notice import lecture_schedule,day_update
 import schedule
+import os
+import configparser
+
 
 if __name__ == "__main__":
   dbname = 'reclass.db'
@@ -22,6 +25,26 @@ if __name__ == "__main__":
   CREATE_ZOOMURL_TABLE = ''' CREATE TABLE IF NOT EXISTS zoomURL(lecture_name TEXT, url TEXT)'''
   cur.execute(CREATE_ZOOMURL_TABLE)
   conn.commit()
+
+  if not os.path.exists('config.ini'):
+    config_ini = configparser.ConfigParser()
+    config_ini['Config'] = {
+      'alert_task' : 1,
+      'connect_zoom' : 5,
+      'update' : 6
+    }
+    with open('config.ini','w') as file:
+      config_ini.write(file)
+
+  if not os.path.exists('scomb.ini'):
+    scomb_ini = configparser.ConfigParser()
+    scomb_ini['Scomb'] = {
+      'id' : '',
+      'password' : ''
+    }
+    with open('scomb.ini','w') as file:
+      scomb_ini.write(file)
+
 
   #授業スケジュールの設定
   lecture_schedule()
