@@ -2,3 +2,6 @@
 /__pycache__
 debug.log
 reclass.db
+main.spec
+/dist
+/build
