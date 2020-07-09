@@ -3,7 +3,9 @@ disingner : 寺尾颯人
 date      : 2020.07.04
 purpose   : 毎時間授業があるか確認し,通知,zoom参加を行う.
 '''
-from plyer import notification
+
+
+
 import sqlite3
 import PySimpleGUI as sg
 from zoom import join_meeting
@@ -11,6 +13,7 @@ import configparser
 import time
 import datetime
 import schedule
+from plyer import notification
 
 def confirm_lecture(day,time):
   '''授業があるか確認し、あった場合zoomに参加するか確認する.
