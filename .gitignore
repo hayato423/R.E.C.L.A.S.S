@@ -4,3 +4,6 @@ debug.log
 reclass.db
 /dist
 /build
+/src/__pycache__
+/src/scomb.ini
+/src/config.ini
