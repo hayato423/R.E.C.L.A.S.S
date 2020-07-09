@@ -29,7 +29,7 @@ def join_meeting(url):
     なし
   '''
   try:
-    driver = webdriver.Chrome(executable_path=resource_path('./driver/chromedriver.exe'))
+    driver = webdriver.Chrome(executable_path=resource_path('../driver/chromedriver.exe'))
     wait = WebDriverWait(driver,20)
     #引数のurlにアクセス
     driver.get(url)

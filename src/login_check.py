@@ -18,7 +18,7 @@ def login(USER,PASS):
     options = Options()
     options.add_argument('--headless')
     #options.add_experimental_option('excludeSwitches',['enable-logging'])
-    browser = webdriver.Chrome(executable_path=resource_path('./driver/chromedriver.exe'),chrome_options=options)
+    browser = webdriver.Chrome(executable_path=resource_path('../driver/chromedriver.exe'),chrome_options=options)
     wait = WebDriverWait(browser,20)
     url_login = "https://scomb.shibaura-it.ac.jp/portal/index"
     browser.get(url_login)

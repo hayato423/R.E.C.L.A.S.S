@@ -44,7 +44,7 @@ def get_timetable(id,password):
   options = Options()
   options.add_argument('--headless')
   #options.add_experimental_option('excludeSwitches',['enable-logging'])
-  driver = webdriver.Chrome(executable_path=resource_path('./driver/chromedriver.exe'), chrome_options=options)
+  driver = webdriver.Chrome(executable_path=resource_path('../driver/chromedriver.exe'), chrome_options=options)
   wait = WebDriverWait(driver,20)
   scomb_url = 'https://scomb.shibaura-it.ac.jp/portal/index'
   driver.get(scomb_url)

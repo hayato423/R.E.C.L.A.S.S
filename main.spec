@@ -3,9 +3,9 @@
 block_cipher = None
 
 
-a = Analysis(['main.py'],
+a = Analysis(['./src/main.py'],
              pathex=['D:\\Reclass'],
-             binaries=[('./driver/chromedriver.exe', './driver')],
+             binaries=[('./driver/chromedriver.exe', '../driver')],
              datas=[],
              hiddenimports=['plyer.platforms.win.notification'],
              hookspath=[],
