@@ -13,6 +13,7 @@ chromedriver-binary = "==83.0.4103.39"
 schedule = "*"
 plyer = "*"
 pyinstaller = "*"
+bs4 = "*"
 
 [requires]
 python_version = "3.8"
