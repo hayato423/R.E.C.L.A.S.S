@@ -9,6 +9,7 @@ import config
 import lecture
 import scomb
 from get_timetable import get_timetable
+from task_reload import task_reload
 import configparser
 import sqlite3
 from org_factory import dict_factory
@@ -66,7 +67,6 @@ class Home:
       self.open()
     else:
       sg.Popup(msg)
-
 
 
   def open(self):
@@ -240,6 +240,7 @@ class Home:
           self.lecture_instances[5][4].open()
 
       elif main_event == 'update_timetable':
+        task_reload()
         self.update_timetable(main_window)
 
       elif main_event == 'timeout':
