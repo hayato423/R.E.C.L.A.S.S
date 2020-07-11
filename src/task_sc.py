@@ -4,8 +4,6 @@ date : 編集日(2020.6.30)
 purpose : 課題スクレイピングおよびデータベース書き込み
 """
 
-
-
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
@@ -58,6 +56,7 @@ def task_sc(id,password):
         next_button = driver.find_element_by_id('continueButton')
         next_button.click()
         wait.until(EC.presence_of_all_elements_located)
+        driver.implicitly_wait(10)
         home_url = driver.current_url
         
         if home_url == 'https://scomb.shibaura-it.ac.jp/portal/contents/home/':
@@ -104,11 +103,12 @@ def task_sc(id,password):
         else:
             print('開けていません')
             msg = 'ログインに失敗しました'
-            tasks = []
+            tasks = ['error']
         
     except Exception as e:
         print('例外')
         msg = '例外'
+        tasks = ['error']
         print(e)
     finally:
         driver.close()

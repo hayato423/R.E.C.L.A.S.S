@@ -7,6 +7,8 @@ purpose : 課題更新要請処理
 import configparser
 from task_sc import task_sc
 from task_sc import task_write
+import PySimpleGUI as sg
+#from time import sleep
 
 def task_reload():
     
@@ -26,12 +28,18 @@ def task_reload():
     msg,task = task_sc(ID,PASSWORD)
     while task == []:
         msg,task = task_sc(ID,PASSWORD)
-        if msg != '例外' and task != [] and msg == 'ログインに失敗しました':
+        if task != ['error'] and msg == 'ログインに失敗しました':
             break
         
     print(task)
     print(msg)
-    if msg != 'ログインに失敗しました':
+    if msg == 'ログインに成功しました':
         task_write(task)
+        sg.Popup('課題の取得に成功しました')
+        
+    else:
+        sg.Popup('課題の取得に失敗しました.')
+        
+        
 
 #task_reload()

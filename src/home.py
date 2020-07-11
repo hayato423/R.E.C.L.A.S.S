@@ -48,7 +48,7 @@ class Home:
   def update_timetable(self,window):
     #config.iniからidとパスワードを読み込み
     scomb_ini = configparser.ConfigParser()
-    scomb_ini.read('scomb.ini',encoding='utf-8')
+    scomb_ini.read('../scomb.ini',encoding='utf-8')
     ID = scomb_ini['Scomb']['ID']
     PASSWORD = scomb_ini['Scomb']['Password']
     status , msg = get_timetable(ID,PASSWORD)
