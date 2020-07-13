@@ -29,7 +29,7 @@ class Home:
     #課題リスト
     self.task_data=[[None]*5 for i in range(6)]
     #taskインスタンスを格納するリスト
-    self.task_instances=[[None]*5 for i in ragne(6)]
+    self.task_instances=[[None]*5 for i in range(6)]
 
     #データベースから時間割を取得
     conn = sqlite3.connect('reclass.db')
