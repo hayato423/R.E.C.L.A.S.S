@@ -30,7 +30,7 @@ def task_sc(id,password):
     options = Options()
     options.add_argument('--headless')
     chormepath = os.path.abspath('../driver/chromedriver.exe')
-    print(chormepath)
+    #print(chormepath)
     driver = webdriver.Chrome(executable_path=chormepath,options=options)
     wait = WebDriverWait(driver,20)
     scomb_url = 'https://scomb.shibaura-it.ac.jp/portal/index'
