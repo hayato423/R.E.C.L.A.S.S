@@ -91,6 +91,8 @@ class Home:
       cur.execute('select * from tasks')
       new_tasks_list = cur.fetchall()
       self.task_data = new_tasks_list
+      window.close()
+      self.open()
 
 
   def open(self):
@@ -318,7 +320,7 @@ class Home:
         self.update_timetable(main_window)
 
       elif main_event == 'update_task':
-        self.update_task()
+        self.update_task(main_window)
 
 
       elif main_event == 'timeout':
