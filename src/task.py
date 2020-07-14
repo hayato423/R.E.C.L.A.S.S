@@ -11,7 +11,7 @@ class Task:
         #授業名、課題名、締切日
         self.lecture_name=lecture_name
         self.task_name=task_name
-        self.deadline=deadline
+        self.deadline=deadline[0:4]+'年'+ deadline[4:6] + '月' + deadline[6:8]+'日'
         self.complete = complete
 
     def open(self):
@@ -22,7 +22,7 @@ class Task:
             [sg.Text('期限:'+self.deadline)],
             [sg.Text('提出状況'+self.complete)]
         ]
-        window = sg.Window(self.lecture_name,layout=layout,size=(200,200))
+        window = sg.Window(self.lecture_name,layout=layout,size=(300,200))
         while True:
             event ,value = window.read()
             if event is None:
