@@ -11,13 +11,13 @@ import PySimpleGUI as sg
 #from time import sleep
 
 def task_reload():
-    
+
     """
     課題の更新を要請する.
     Args:
     Return:
     """
-    
+
     config_ini = configparser.ConfigParser()
     config_ini.read('../scomb.ini',encoding = 'utf-8')
     ID = config_ini['Scomb']['id']
@@ -30,16 +30,18 @@ def task_reload():
         msg,task = task_sc(ID,PASSWORD)
         if task != ['error'] and msg == 'ログインに失敗しました':
             break
-        
+
     print(task)
     print(msg)
     if msg == 'ログインに成功しました':
         task_write(task)
         sg.Popup('課題の取得に成功しました')
-        
+        return 0, msg
+
     else:
         sg.Popup('課題の取得に失敗しました.')
-        
-        
+        return -1, msg
+
+
 
 #task_reload()

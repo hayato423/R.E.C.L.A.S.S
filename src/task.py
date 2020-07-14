@@ -6,7 +6,7 @@ purpose:課題詳細画面の表示
 
 import PySimpleGUI as sg
 
-class task:
+class Task:
     def __init__(self,lecture_name,task_name,deadline,complete):
         #授業名、課題名、締切日
         self.lecture_name=lecture_name
@@ -19,7 +19,7 @@ class task:
         layout=[
             [sg.Text('授業名:'+self.lecture_name)],
             [sg.Text('課題名:'+self.task_name)],
-            [sg.Text('期限:'+self.deadline)]
+            [sg.Text('期限:'+self.deadline)],
             [sg.Text('提出状況'+self.complete)]
         ]
         window = sg.Window(self.lecture_name,layout=layout,size=(200,200))
@@ -28,6 +28,6 @@ class task:
             if event is None:
                 break
         window.close()
-        
-task = task('1A','1B','20202020','ok')
-task.open(task)
+
+#task = task('1A','1B','20202020','ok')
+#task.open(task)

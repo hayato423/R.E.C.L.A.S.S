@@ -50,10 +50,10 @@ if __name__ == "__main__":
   #授業スケジュールの設定
   lecture_schedule()
   schedule.every().day.at("00:00").do(day_update)
-  
+
   #課題系統の定時処理
   alart_time()
-  
+
 
   home_window = home.Home()
   home_window.open()
