@@ -34,22 +34,37 @@ class Config:
             result = True
             msg = ''
             if event == '保存':
-                if len(values['alert_task']) >= 2:
+                if len(values['alert_task']) >= 2 or len(values['alert_task']) <= 0:
                     show_message = "通知時間は一桁にしてください。\n"
                     result = False
                     msg += show_message
-                if len(values['connect_zoom']) >= 3:
+                elif int(values['alert_task']) < 0:
+                    result = False
+                    show_message = "通知時間は正の数を入力してください。"
+                    msg += show_message
+
+                if len(values['connect_zoom']) >= 3 or len(values['connect_zoom']) <= 0:
                     result = False
                     show_message = "接続時間は二桁以下にして下さい。\n"
                     msg += show_message
-                if len(values['update']) >= 3:
+                elif int(values['connect_zoom']) < 0:
+                    result = False
+                    show_message = "接続時間は正の数を入力してください。"
+                    msg += show_message
+                if len(values['update']) >= 3 or len(values['update']) <= 0:
                     result = False
                     show_message = "更新間隔は二桁以下にして下さい。\n"
+                    msg += show_message
+                elif int(values['update']) < 0:
+                    result = False
+                    show_message = "更新間隔は正の数を入力してください。"
                     msg += show_message
                 if result == True:
                     timesave(values['alert_task'],values['connect_zoom'], values['update'])
                     show_message = "登録完了しました。"
                     sg.popup(show_message)
+
+
                 else:
                     sg.popup(msg)
             if event == 'キャンセル':
