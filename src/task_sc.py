@@ -14,6 +14,7 @@ import re
 import sqlite3
 from datetime import datetime,date
 import os
+from get_timetable import resource_path
 
 def task_sc(id,password):
 
@@ -26,12 +27,12 @@ def task_sc(id,password):
     task:課題一覧
     str:終了メッセージ
     """
-    
+
     options = Options()
     options.add_argument('--headless')
-    chormepath = os.path.abspath('../driver/chromedriver.exe')
+    #chormepath = os.path.abspath('../driver/chromedriver.exe')
     #print(chormepath)
-    driver = webdriver.Chrome(executable_path=chormepath,options=options)
+    driver = webdriver.Chrome(executable_path=resource_path('../driver/chromedriver.exe'),options=options)
     wait = WebDriverWait(driver,20)
     scomb_url = 'https://scomb.shibaura-it.ac.jp/portal/index'
     driver.get(scomb_url)
@@ -58,7 +59,7 @@ def task_sc(id,password):
         wait.until(EC.presence_of_all_elements_located)
         driver.implicitly_wait(10)
         home_url = driver.current_url
-        
+
         if home_url == 'https://scomb.shibaura-it.ac.jp/portal/contents/home/':
             msg = 'ログインに成功しました'
             wait.until(EC.presence_of_all_elements_located)
@@ -75,7 +76,7 @@ def task_sc(id,password):
             date_today = date.today()
             date_today = str(date_today).replace('-','')
             print(date_today)
-            
+
             for low in onclick_js:
                 print(low)
                 low = low.replace('\'','').replace('\"','').replace(',','').replace('j','')
@@ -99,12 +100,12 @@ def task_sc(id,password):
                 teacher = teacher.replace('教員名：','')
                 deadline = deadline.replace('締切日：','').replace('/','')
                 tasks.append([title,detail,teacher,deadline,complete])
-        
+
         else:
             print('開けていません')
             msg = 'ログインに失敗しました'
             tasks = ['error']
-        
+
     except Exception as e:
         print('例外')
         msg = '例外'
@@ -113,7 +114,7 @@ def task_sc(id,password):
     finally:
         driver.close()
         return msg,tasks
-            
+
 def task_write(tasks):
 
     """
@@ -131,11 +132,11 @@ def task_write(tasks):
     tasks = tuple(tasks)
 
     print(tasks)
-    
+
     c.execute('delete from tasks')
     for task in tasks:
         print(task)
         c.execute('insert into tasks (task_name,lecture_name,teacher_name,deadline,complete) values(?,?,?,?,?)',[task[0],task[1],task[2],task[3],task[4]])
     conn.commit()
     conn.close()
-        
+

@@ -70,6 +70,7 @@ def get_timetable(id,password):
     cur_url = driver.current_url
     #ログインできたか確認
     if cur_url == 'https://scomb.shibaura-it.ac.jp/portal/contents/home/':
+      print("ログインに成功しました")
       #lmsボタンをクリック
       lms_button = driver.find_element_by_id('navi-lms')
       lms_button.click()
