@@ -18,6 +18,7 @@ import threading
 import schedule
 import time
 import datetime
+import task
 
 
 class Home:
@@ -25,7 +26,11 @@ class Home:
     #時間割リスト [時間][曜日]
     self.time_table = [[None]*5 for i in range(6)]
     #lectureインスタンスを格納するリスト
-    self.lecture_instances = [[None]*5 for i in range(6)]
+    self.lecture_instances = [[None]*5 for i in range(12)]
+    #課題リスト
+    self.task_data=[[None]*5 for i in range(6)]
+    #taskインスタンスを格納するリスト
+    self.task_instances=[[None]*5 for i in range(6)]
 
     #データベースから時間割を取得
     conn = sqlite3.connect('reclass.db')
@@ -36,13 +41,20 @@ class Home:
     self.lectures_data = new_lectures_list
 
     #各課題の辞書型データ
-    self.task_data=[
-      {'lecture_name':'ソフトウェア工学','task_name':'シークエンス図','deadline':'??/!!'}
-    ]
+    conn=sqlite3.connect('reclass.db')
+    conn.row_factory=dict_factory
+    c=conn.cursor()
+    c.execute('select * from tasks')
+    new_task_list=c.fetchall()
+    self.task_d=new_task_list
 
     #授業のデータを時間割リストに格納
     for l in self.lectures_data:
       self.time_table[l['day']][l['time']] = l
+
+    #課題のデータをリストに格納
+    for l in self.task_d:
+      self.task_data[l['day']][l['time']]=l
 
 
   def update_timetable(self,window):
@@ -67,7 +79,20 @@ class Home:
       self.open()
     else:
       sg.Popup(msg)
-
+    if status==0:
+      conn=sqlite3.connect('reclass.db')
+      conn.row_factory=dict_factory
+      c=conn.cursor()
+      c.execute('select * from tasks')
+      new_task_list=c.fetchall()
+      self.task_d=new_task_list
+      for l in self.task_d:
+        self.task_data[l['day']][l['time']]=l
+      sg.Popup(msg)
+      window.close()
+      self.open()
+    else:
+      sg.Popup(msg)
 
   def open(self):
     '''ホーム画面を開き、イベント処理を行う.
@@ -114,13 +139,16 @@ class Home:
           self.lecture_instances[day][time] = instance
 
     #課題表示レイアウト
-    task_layout=[
-      [sg.Text('ソフトウェア工学')],
-      [sg.Text('シークエンス図')],
-      [sg.Text('2020/??/!!')]
-    ]
+    task_layout=[[sg.Text('課題一覧')]]
+    for time in range(5):
+      for day in range(6):
+        if self.task_data[day][time] is not None:
+          tk=self.task_data[day][time]
+          task_layout.append[sg.Button(tk['task_name'])]
+          instance=task.Task(tk['lecture_name'],tk['task_name'],tk['deadline'])
+          self.task_instances[day+6][time]=instance
 
-    main_layout=[[sg.Frame('',timetable_layout),sg.Frame('課題一覧',task_layout)]]
+    main_layout=[[sg.Frame('',timetable_layout),sg.Frame('',task_layout)]]
 
 
 
@@ -238,6 +266,102 @@ class Home:
       elif main_event == '54':
         if self.lecture_instances[5][4] is not None:
           self.lecture_instances[5][4].open()
+
+      elif main_event == '60':
+        if self.task_instances[6][0] is not None:
+          self.task_instances[6][0].open()
+      elif main_event == '61':
+        if self.task_instances[6][1] is not None:
+          self.task_instances[6][1].open()
+      elif main_event == '62':
+        if self.task_instances[6][2] is not None:
+          self.task_instances[6][2].open()
+      elif main_event == '63':
+        if self.task_instances[6][3] is not None:
+          self.task_instances[6][3].open()
+      elif main_event == '64':
+        if self.task_instances[6][4] is not None:
+          self.task_instances[6][4].open()
+
+      elif main_event == '70':
+        if self.task_instances[7][0] is not None:
+          self.task_instances[7][0].open()
+      elif main_event == '71':
+        if self.task_instances[7][1] is not None:
+          self.task_instances[7][1].open()
+      elif main_event == '72':
+        if self.task_instances[7][2] is not None:
+          self.task_instances[7][2].open()
+      elif main_event == '73':
+        if self.task_instances[7][3] is not None:
+          self.task_instances[7][3].open()
+      elif main_event == '74':
+        if self.task_instances[7][4] is not None:
+          self.task_instances[7][4].open()
+
+      elif main_event == '80':
+        if self.task_instances[8][0] is not None:
+          self.task_instances[8][0].open()
+      elif main_event == '81':
+        if self.task_instances[8][1] is not None:
+          self.task_instances[8][1].open()
+      elif main_event == '82':
+        if self.task_instances[8][2] is not None:
+          self.task_instances[8][2].open()
+      elif main_event == '83':
+        if self.task_instances[8][3] is not None:
+          self.task_instances[8][3].open()
+      elif main_event == '84':
+        if self.task_instances[8][4] is not None:
+          self.task_instances[8][4].open()
+
+      elif main_event == '90':
+        if self.task_instances[9][0] is not None:
+          self.task_instances[9][0].open()
+      elif main_event == '91':
+        if self.task_instances[9][1] is not None:
+          self.task_instances[9][1].open()
+      elif main_event == '92':
+        if self.task_instances[9][2] is not None:
+          self.task_instances[9][2].open()
+      elif main_event == '93':
+        if self.task_instances[9][3] is not None:
+          self.task_instances[9][3].open()
+      elif main_event == '94':
+        if self.task_instances[9][4] is not None:
+          self.task_instances[9][4].open()
+
+      elif main_event == '100':
+        if self.task_instances[10][0] is not None:
+          self.task_instances[10][0].open()
+      elif main_event == '101':
+        if self.task_instances[10][1] is not None:
+          self.task_instances[10][1].open()
+      elif main_event == '102':
+        if self.task_instances[10][2] is not None:
+          self.task_instances[10][2].open()
+      elif main_event == '103':
+        if self.task_instances[10][3] is not None:
+          self.task_instances[10][3].open()
+      elif main_event == '104':
+        if self.task_instances[10][4] is not None:
+          self.task_instances[10][4].open()
+
+      elif main_event == '110':
+        if self.task_instances[11][0] is not None:
+          self.task_instances[11][0].open()
+      elif main_event == '111':
+        if self.task_instances[11][1] is not None:
+          self.task_instances[11][1].open()
+      elif main_event == '112':
+        if self.task_instances[11][2] is not None:
+          self.task_instances[11][2].open()
+      elif main_event == '113':
+        if self.task_instances[11][3] is not None:
+          self.task_instances[11][3].open()
+      elif main_event == '114':
+        if self.task_instances[11][4] is not None:
+          self.task_instances[11][4].open()
 
       elif main_event == 'update_timetable':
         task_reload()

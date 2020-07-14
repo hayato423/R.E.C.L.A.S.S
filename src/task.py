@@ -16,8 +16,8 @@ class task:
     def open(self):
         #課題詳細画面出力
         layout=[
-            [sg.Text(self.lecture_name)],
-            [sg.Text(self.task_name)],
+            [sg.Text('授業名:'+self.lecture_name)],
+            [sg.Text('課題名:'+self.task_name)],
             [sg.Text('期限:'+self.deadline)]
         ]
         window = sg.Window(self.lecture_name,layout=layout,size=(200,200))
