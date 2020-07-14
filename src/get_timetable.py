@@ -132,5 +132,3 @@ def update_table(lectures_list):
       cur.execute(query,tuple(lec))
   conn.commit()
   conn.close()
-
-

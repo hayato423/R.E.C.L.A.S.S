@@ -10,6 +10,7 @@ from lecture_notice import lecture_schedule,day_update
 import schedule
 import os
 import configparser
+from task_alart import alart_time
 
 
 if __name__ == "__main__":
@@ -20,7 +21,7 @@ if __name__ == "__main__":
   #テーブル作成
   CREATE_LECTURES_TABLE = '''CREATE TABLE IF NOT EXISTS lectures(lecture_name TEXT, teacher_name TEXT, day INTEGER, time INTERGER )'''
   cur.execute(CREATE_LECTURES_TABLE)
-  CREATE_TASKS_TABLE = '''CREATE TABLE IF NOT EXISTS tasks(lecture_name TEXT, teacher_name TEXT, task_name TEXT, submit_state INTEGER,deadline DATETIME)'''
+  CREATE_TASKS_TABLE = '''CREATE TABLE IF NOT EXISTS tasks(task_name TEXT, lecture_name TEXT, teacher_name TEXT, deadline TEXT,complete TEXT)'''
   cur.execute(CREATE_TASKS_TABLE)
   CREATE_ZOOMURL_TABLE = ''' CREATE TABLE IF NOT EXISTS zoomURL(lecture_name TEXT, url TEXT)'''
   cur.execute(CREATE_ZOOMURL_TABLE)
@@ -49,6 +50,10 @@ if __name__ == "__main__":
   #授業スケジュールの設定
   lecture_schedule()
   schedule.every().day.at("00:00").do(day_update)
+  
+  #課題系統の定時処理
+  alart_time()
+  
 
   home_window = home.Home()
   home_window.open()

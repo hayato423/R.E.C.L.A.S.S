@@ -4,8 +4,6 @@ date      : 2020.07.04
 purpose   : 毎時間授業があるか確認し,通知,zoom参加を行う.
 '''
 
-
-
 import sqlite3
 import PySimpleGUI as sg
 from zoom import join_meeting
