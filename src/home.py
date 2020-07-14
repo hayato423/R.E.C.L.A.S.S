@@ -142,16 +142,18 @@ class Home:
     #課題に基づいてレイアウトを追加
     task_layout=[[sg.Text('課題一覧'),sg.Button('更新',key='update_task')]]
 
+    for l in range(len(self.task_instances),15):
+      self.task_instances.append(None)
+
     task_index = 0
     for l in  self.task_data:
       if l['complete'] != '済み':
         task_layout.append([sg.Button(l['task_name'],size=(width,3),key='task'+str(task_index))])
         instance = task.Task(l['lecture_name'],l['task_name'],l['deadline'],l['complete'])
-        self.task_instances.append(instance)
+        self.task_instances[task_index] = instance
         task_index += 1
 
-    for l in range(len(self.task_instances),15):
-      self.task_instances.append(None)
+
 
     '''
     for l in self.task_instances:
