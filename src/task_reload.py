@@ -19,7 +19,7 @@ def task_reload():
     """
 
     config_ini = configparser.ConfigParser()
-    config_ini.read('../scomb.ini',encoding = 'utf-8')
+    config_ini.read('./scomb.ini',encoding = 'utf-8')
     ID = config_ini['Scomb']['id']
     PASSWORD = config_ini['Scomb']['password']
     task = []

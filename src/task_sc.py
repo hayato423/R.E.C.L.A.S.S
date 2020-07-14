@@ -112,7 +112,7 @@ def task_sc(id,password):
         tasks = ['error']
         print(e)
     finally:
-        driver.close()
+        driver.quit()
         return msg,tasks
 
 def task_write(tasks):
