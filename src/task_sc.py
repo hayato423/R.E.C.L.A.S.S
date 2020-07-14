@@ -65,19 +65,19 @@ def task_sc(id,password):
             source_code = driver.page_source
             soup = BeautifulSoup(source_code,'html.parser')
             onclick_js = []
-            print(msg)
+            #print(msg)
             func = soup.find_all('dd',class_='list')
             onclick = func[0].select('a[onclick]')
-            print(onclick)
+            #print(onclick)
             for click in onclick:
                 driver.implicitly_wait(5)
                 onclick_js.append(click.get('onclick')[16:21])
             date_today = date.today()
             date_today = str(date_today).replace('-','')
-            print(date_today)
+            #print(date_today)
             
             for low in onclick_js:
-                print(low)
+                #print(low)
                 low = low.replace('\'','').replace('\"','').replace(',','').replace('j','')
                 urllib = 'https://scomb.shibaura-it.ac.jp/ScombPortlet/fancybox/lbLmsInit?primaryKey='+ str(low) +'&selDate='+ date_today +'&request_locale=ja&format=1'
                 driver.get(urllib)
@@ -101,15 +101,15 @@ def task_sc(id,password):
                 tasks.append([title,detail,teacher,deadline,complete])
         
         else:
-            print('開けていません')
+            #print('開けていません')
             msg = 'ログインに失敗しました'
             tasks = ['error']
         
     except Exception as e:
-        print('例外')
+        #print('例外')
         msg = '例外'
         tasks = ['error']
-        print(e)
+        #print(e)
     finally:
         driver.close()
         return msg,tasks
@@ -130,11 +130,11 @@ def task_write(tasks):
 
     tasks = tuple(tasks)
 
-    print(tasks)
+    #print(tasks)
     
     c.execute('delete from tasks')
     for task in tasks:
-        print(task)
+        #print(task)
         c.execute('insert into tasks (task_name,lecture_name,teacher_name,deadline,complete) values(?,?,?,?,?)',[task[0],task[1],task[2],task[3],task[4]])
     conn.commit()
     conn.close()

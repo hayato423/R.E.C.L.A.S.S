@@ -15,8 +15,6 @@ class task:
         self.complete=complete
 
     def open(self):
-        print(type(self.deadline))
-        print(type(self.complete))
         #課題詳細画面出力
         layout=[
             [sg.Text('授業名:'+self.lecture_name)],

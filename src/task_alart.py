@@ -39,10 +39,10 @@ def task_alart():
 
 
     for task in tasks:
-        print(task[3])
+        #print(task[3])
         deadline = task[3]
         deadline_day = date(int(deadline[0:4]),int(deadline[4:6]),int(deadline[6:8]))
-        print(deadline_day)
+        #print(deadline_day)
         if deadline_day - timedelta(days = int(alert)) == today or deadline_day == today:
             notification.notify(
                 title = '課題通知',

@@ -31,8 +31,8 @@ def task_reload():
         if task != ['error'] and msg == 'ログインに失敗しました':
             break
         
-    print(task)
-    print(msg)
+    #print(task)
+    #print(msg)
     if msg == 'ログインに成功しました':
         task_write(task)
         sg.Popup('課題の取得に成功しました')
