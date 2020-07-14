@@ -30,8 +30,7 @@ def task_reload():
         msg,task = task_sc(ID,PASSWORD)
         if task != ['error'] and msg == 'ログインに失敗しました':
             break
-        
-    #print(task)
+
     #print(msg)
     if msg == 'ログインに成功しました':
         task_write(task)

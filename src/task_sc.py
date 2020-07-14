@@ -74,8 +74,7 @@ def task_sc(id,password):
                 onclick_js.append(click.get('onclick')[16:21])
             date_today = date.today()
             date_today = str(date_today).replace('-','')
-            #print(date_today)
-            
+
             for low in onclick_js:
                 #print(low)
                 low = low.replace('\'','').replace('\"','').replace(',','').replace('j','')
