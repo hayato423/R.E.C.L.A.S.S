@@ -141,17 +141,17 @@ class Home:
     #課題に基づいてレイアウトを追加
     task_layout=[[sg.Text('課題一覧')]]
     
+    task_number = 100
+    
     for l in self.task_data:
-      task_layout.append([sg.Button(l['task_name'],size=(width,3))])
+      task_layout.append([sg.Button(l['task_name'],key = str(task_number),size=(width,2))])
       instance = task.task(l['lecture_name'],l['task_name'],l['deadline'],l['complete'])
       self.task_instances.append(instance)
+      task_number += 1
     
     for l in range(len(self.task_instances),15):
       self.task_instances.append(None)
       
-    for l in self.task_instances:
-      print(l)
- 
     main_layout=[[sg.Frame('',timetable_layout),sg.Frame('',task_layout)]]
 
 
@@ -270,55 +270,55 @@ class Home:
         if self.lecture_instances[5][4] is not None:
           self.lecture_instances[5][4].open()
 
-      elif main_event == '60':
+      elif main_event == '100':
         if self.task_instances[0] is not None:
           self.task_instances[0].open()
-      elif main_event == '61':
+      elif main_event == '101':
         if self.task_instances[1] is not None:
           self.task_instances[1].open()
-      elif main_event == '62':
+      elif main_event == '102':
         if self.task_instances[2] is not None:
           self.task_instances[2].open()
-      elif main_event == '63':
+      elif main_event == '103':
         if self.task_instances[3] is not None:
           self.task_instances[3].open()
-      elif main_event == '64':
+      elif main_event == '104':
         if self.task_instances[4] is not None:
           self.task_instances[4].open()
 
-      elif main_event == '70':
+      elif main_event == '105':
         if self.task_instances[5] is not None:
           self.task_instances[5].open()
-      elif main_event == '71':
+      elif main_event == '106':
         if self.task_instances[6] is not None:
           self.task_instances[6].open()
-      elif main_event == '72':
+      elif main_event == '107':
         if self.task_instances[7] is not None:
           self.task_instances[7].open()
-      elif main_event == '73':
+      elif main_event == '108':
         if self.task_instances[8] is not None:
           self.task_instances[8].open()
-      elif main_event == '74':
+      elif main_event == '109':
         if self.task_instances[9] is not None:
           self.task_instances[9].open()
 
-      elif main_event == '80':
+      elif main_event == '110':
         if self.task_instances[10] is not None:
           self.task_instances[10].open()
-      elif main_event == '81':
+      elif main_event == '111':
         if self.task_instances[11] is not None:
           self.task_instances[11].open()
-      elif main_event == '82':
+      elif main_event == '112':
         if self.task_instances[12] is not None:
           self.task_instances[12].open()
-      elif main_event == '83':
+      elif main_event == '113':
         if self.task_instances[13] is not None:
           self.task_instances[13].open()
-      elif main_event == '84':
+      elif main_event == '114':
         if self.task_instances[14] is not None:
           self.task_instances[14].open()
 
-      elif main_event == '90':
+      elif main_event == '115':
         if self.task_instances[15] is not None:
           self.task_instances[15].open()
           
