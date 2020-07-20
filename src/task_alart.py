@@ -13,11 +13,11 @@ import schedule
 from task_reload import task_reload
 
 def task_alart():
-   
+
     """
     課題をn日前に通知する.
     Args:
-    
+
     Return:
     windows通知
     """
@@ -25,7 +25,7 @@ def task_alart():
 
     config_ini = configparser.ConfigParser()
 
-    config_ini.read('../config.ini',encoding = 'utf-8')
+    config_ini.read('./config.ini',encoding = 'utf-8')
 
     alert = config_ini['Config']['alert_task']
     conn = sqlite3.connect('reclass.db')
@@ -49,7 +49,7 @@ def task_alart():
                 message = task[0] + task[3],
                 app_name = "RECLASS"
             )
-            
+
 def alart_time():
     """
     課題に関する定時処理を実行する
@@ -60,4 +60,3 @@ def alart_time():
     schedule.every().day.at("06:23").do(task_alart)
     schedule.every().day.at("12:00").do(task_alart)
     schedule.every().day.at("08:00").do(task_reload)
-    
