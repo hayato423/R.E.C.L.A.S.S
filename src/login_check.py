@@ -49,11 +49,11 @@ def login(USER, PASS):
         if cur_url == 'https://scomb.shibaura-it.ac.jp/portal/contents/home/':
             judge = 1
             return judge
-        except TimeoutException as te:
-            judge = 2
-            return judge
-        except Exception as e:
-            judge = 3
-            return judge
-        finally:
-            browser.quit()
+    except TimeoutException as te:
+        judge = 2
+        return judge
+    except Exception as e:
+        judge = 3
+        return judge
+    finally:
+        browser.quit()
