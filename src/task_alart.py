@@ -57,6 +57,9 @@ def alart_time():
     Return:
     null(関数実行のみ)
     """
+    config_ini = configparser.ConfigParser()
+    config_ini.read('./config.ini',encoding='utf-8')
+    update = config_ini['Config']['update']
     schedule.every().day.at("06:23").do(task_alart)
     schedule.every().day.at("12:00").do(task_alart)
-    schedule.every().day.at("08:00").do(task_reload)
+    schedule.every(int(update)).hours.do(task_reload)
