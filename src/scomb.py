@@ -13,6 +13,10 @@ from login_check import login
 class Scomb:
 
   def open(self):
+    '''scombID,パスワード登録画面を開き、イベント処理を行う.
+    Args: なし
+    Returns: なし
+    '''
    #画面の作成(入力フォームなど)
    layout = [
     [sg.Text('ScombID パスワード登録',font=('IPAゴシック',16),
@@ -23,7 +27,7 @@ class Scomb:
     [sg.Button('キャンセル')]
    ]
    window = sg.Window('Scomb登録',layout=layout,size=(300,200))
-   
+
    #画面表示と入力されたIDとPasswordを正誤判定
    while True:
       event , values = window.read()
@@ -53,7 +57,7 @@ class Scomb:
            continue
           elif judge_login == 3:
            show_message = "IDもしくはパスワードが間違っています"
-           sg.popup(show_message) 
+           sg.popup(show_message)
            continue
       if event == 'キャンセル':
         window.close()

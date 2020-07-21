@@ -11,6 +11,14 @@ import chromedriver_binary
 
 
 def login_confirm(ID,PASSWORD):
+  '''scombログインチェック
+    Args:
+      ID: 学籍番号
+      PASSWORD: パスワード
+    Returns:
+      can_login : 判定結果
+      msg : メッセージ
+    '''
   msg = ''
   can_login = False
   options = Options()

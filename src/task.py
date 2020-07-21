@@ -8,6 +8,14 @@ import PySimpleGUI as sg
 
 class Task:
     def __init__(self,lecture_name,task_name,deadline,complete):
+    '''課題詳細画面を開き、イベント処理を行う.
+    Args:
+        lecture_name(str): 授業名
+        task_name(str): 課題名
+        deadline(str): 締切日
+        complete(int): 提出状況
+    Returns: なし
+    '''
         #授業名、課題名、締切日
         self.lecture_name=lecture_name
         self.task_name=task_name

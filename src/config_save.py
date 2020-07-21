@@ -8,6 +8,13 @@ import configparser
 
 
 def timesave(ALERT_TASK, CONECT_ZOOM, UPDATE):
+    '''引数の値をconfig.iniに保存する.
+    Args:
+        ALERT_TASK(str): 課題通知時間
+        CNECT_ZOOM(str): zoom接続時間
+        UPDATE(str): 課題更新間隔
+    Returns: なし
+    '''
     config = configparser.ConfigParser()
     section1 = 'Config'
     config.add_section(section1)
