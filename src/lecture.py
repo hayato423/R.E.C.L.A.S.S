@@ -9,12 +9,23 @@ import sqlite3
 class Lecture:
 
   def __init__(self,lecture_name,teacher_name):
+    '''授業詳細画面の初期化
+    Args:
+      lecture_name(str): 授業名
+      teacher_name(str): 講師名
+    Returns: なし
+    '''
     self.lecture_name = lecture_name
     self.teacher_name = teacher_name
     self.fetch_zoom_url(self.lecture_name)
 
 
   def fetch_zoom_url(self,lecture_name):
+    '''データベースから授業のzoomURLを取得する
+    Args:
+      lecture_name(str):授業名
+    Returns: なし
+    '''
     try:
       conn = sqlite3.connect('reclass.db')
       cur = conn.cursor()
@@ -32,6 +43,10 @@ class Lecture:
 
 
   def open(self):
+    '''授業詳細画面を開き、イベント処理を行う.
+    Args: なし
+    Returns: なし
+    '''
     layout = [
       [sg.Text(self.lecture_name)],
       [sg.Text('担当講師'),sg.Text(self.teacher_name)],

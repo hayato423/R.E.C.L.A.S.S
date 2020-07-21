@@ -23,6 +23,10 @@ import task
 
 class Home:
   def __init__(self):
+    '''ホーム画面の初期化を行う.
+    Args: なし
+    Returns: なし
+    '''
     #時間割リスト [時間][曜日]
     self.time_table = [[None]*5 for i in range(6)]
     #lectureインスタンスを格納するリスト
@@ -60,6 +64,11 @@ class Home:
       self.time_table[l['day']][l['time']] = l
 
   def update_timetable(self,window):
+    '''時間割の更新を行う.
+    Args:
+      window : ウィンドウオブジェクト
+    Returns: なし
+    '''
     #config.iniからidとパスワードを読み込み
     scomb_ini = configparser.ConfigParser()
     scomb_ini.read('./scomb.ini',encoding='utf-8')
@@ -83,6 +92,11 @@ class Home:
       sg.Popup(msg)
 
   def update_task(self,window):
+    '''課題更新を行う.
+    Args:
+      window : ウィンドウオブジェクト
+    Returns: なし
+    '''
     status, msg = task_reload()
     if status == 0:
       conn = sqlite3.connect('reclass.db')

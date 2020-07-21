@@ -20,6 +20,11 @@ import sys
 import os
 
 def resource_path(relative_path):
+  '''chromedriverのパスを指定する
+    Args:
+      relative_path(str): 相対パス
+    Returns: なし
+    '''
   try:
     base_path = sys._MEIPASS
   except Exception:

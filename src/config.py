@@ -12,6 +12,10 @@ import re
 class Config:
 
     def open(self):
+        '''設定画面を開く.
+        Args: なし
+        Returns: なし
+        '''
         config_ini = configparser.ConfigParser()
         config_ini.read('config.ini', encoding='utf-8')
         alert_task = config_ini['Config']['alert_task']
