@@ -28,9 +28,9 @@ class Home:
     Returns: なし
     '''
     #時間割リスト [時間][曜日]
-    self.time_table = [[None]*5 for i in range(6)]
+    self.time_table = [[None]*6 for i in range(6)]
     #lectureインスタンスを格納するリスト
-    self.lecture_instances = [[None]*5 for i in range(12)]
+    self.lecture_instances = [[None]*6 for i in range(12)]
     #課題リスト
     self.task_data=[[None] * 15]
     #taskインスタンスを格納するリスト
@@ -139,11 +139,12 @@ class Home:
       [sg.Text('2')],
       [sg.Text('3')],
       [sg.Text('4')],
-      [sg.Text('5')]
+      [sg.Text('5')],
+      [sg.Text('6')]
     ]
 
     #時間割に基づいてレイアウトを追加
-    for time in range(5):
+    for time in range(6):
       for day in range(6):
         if self.time_table[day][time] is None:
           timetable_layout[time+2].append(sg.Button('',key=str(day)+str(time),size=(width,3)))
@@ -211,6 +212,9 @@ class Home:
       elif main_event == '04':
         if self.lecture_instances[0][4] is not None:
           self.lecture_instances[0][4].open()
+      elif main_event == '05':
+        if self.lecture_instances[0][5] is not None:
+          self.lecture_instances[0][5].open()
 
       elif main_event == '10':
         if self.lecture_instances[1][0] is not None:
@@ -227,6 +231,9 @@ class Home:
       elif main_event == '14':
         if self.lecture_instances[1][4] is not None:
           self.lecture_instances[1][4].open()
+      elif main_event == '15':
+        if self.lecture_instances[1][5] is not None:
+          self.lecture_instances[1][5].open()
 
       elif main_event == '20':
         if self.lecture_instances[2][0] is not None:
@@ -243,6 +250,9 @@ class Home:
       elif main_event == '24':
         if self.lecture_instances[2][4] is not None:
           self.lecture_instances[2][4].open()
+      elif main_event == '25':
+        if self.lecture_instances[2][5] is not None:
+          self.lecture_instances[2][5].open()
 
       elif main_event == '30':
         if self.lecture_instances[3][0] is not None:
@@ -259,6 +269,9 @@ class Home:
       elif main_event == '34':
         if self.lecture_instances[3][4] is not None:
           self.lecture_instances[3][4].open()
+      elif main_event == '35':
+        if self.lecture_instances[3][5] is not None:
+          self.lecture_instances[3][5].open()
 
       elif main_event == '40':
         if self.lecture_instances[4][0] is not None:
@@ -275,6 +288,9 @@ class Home:
       elif main_event == '44':
         if self.lecture_instances[4][4] is not None:
           self.lecture_instances[4][4].open()
+      elif main_event == '45':
+        if self.lecture_instances[4][5] is not None:
+          self.lecture_instances[4][5].open()
 
       elif main_event == '50':
         if self.lecture_instances[5][0] is not None:
@@ -291,6 +307,10 @@ class Home:
       elif main_event == '54':
         if self.lecture_instances[5][4] is not None:
           self.lecture_instances[5][4].open()
+      elif main_event == '55':
+        if self.lecture_instances[5][5] is not None:
+          self.lecture_instances[5][5].open()
+
 
       elif main_event == 'task0':
         if self.task_instances[0] is not None:
